@@ -1,1 +1,1 @@
-# dayz-server-customizer
+# Dayz Standalone Server Customizer
