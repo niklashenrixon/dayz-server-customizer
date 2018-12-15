@@ -1,14 +1,7 @@
 <?PHP
 session_start();
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<title>DSSC - Dayz standalone server customizer</title>
-	<meta charset="utf-8" />
-	<link rel="icon" type="image/png" href="favicon.png" />
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-</head>
+<?PHP include "header.html"; ?>
 <body class="uploads">
 
 <?PHP
@@ -33,18 +26,10 @@ $approvedFile = FALSE;
 $tmpxml = simplexml_load_file($_FILES["uploadedfile"]["tmp_name"]) or die("Upload one of these files: <strong>economy.xml , events.xml , globals.xml , types.xml.</strong> Or your XML file is corrupt or containing errors");
 
 switch ($tmpxml->getName()) {
-	case "types":
-		$filename = 'types';
-		break;
-	case "economy":
-		$filename = 'economy';
-		break;
-	case "events":
-		$filename = 'events';
-		break;
-	case "variables":
-		$filename = 'globals';
-		break;
+	case "types": $filename = 'types'; break;
+	case "economy": $filename = 'economy'; break;
+	case "events": $filename = 'events'; break;
+	case "variables": $filename = 'globals'; break;
 	default:
 		die("Upload one of these files: <strong>economy.xml , events.xml , globals.xml , types.xml. </strong>Or your XML file is corrupt or containing errors");
 }
@@ -60,7 +45,7 @@ if($uploadOk) {
 
 	if (move_uploaded_file($_FILES["uploadedfile"]["tmp_name"], $target_file)) {
 		chmod($target_file, 0777);
-		header('Location: '$filename'.php?upload');
+		header('Location: xml.php?upload='.$filename);
 	} else {
 		die("Sorry, there was an error uploading your file.");
 	}
