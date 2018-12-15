@@ -2,7 +2,7 @@
 session_start();
 include "header.html";
 
-echo '<script>window.XMLData = {}</script><div id="root"></div>';
+echo '<script>window.XMLData = {}</script><div id="root"><img style="height: 164px; margin: 0 auto; display: block;" src="./img/some loader.gif" /></div>';
 
 $form = '
 	Choose how the loot will be modified and press apply to see the change:<br/>
@@ -36,49 +36,20 @@ if(isset($_GET['upload'])) {
 	// Load XML
 	$xmlSave = simplexml_load_file('uploads/'.$_COOKIE['cookiemonster'].'/'.$_GET['upload'].'_'.$_SESSION["hash"].'.xml') or die("Error");
 
-	if($xmlSave->getName() == "types") { echo "The type is loot table"; }
-	if($xmlSave->getName() == "economy") { echo "The type is economy"; }
-	if($xmlSave->getName() == "events") { echo "The type is events"; }
-	if($xmlSave->getName() == "variables") { echo "The type is variables"; }
-
-	echo '<div class="container"><table class="shadow table table-hover table-sm table-dark rounded">
-		<thead>
-			<tr>
-				<th>Item</th>
-				<th>Amount (MAX)</th>
-				<th>Amount (MIN)</th>
-				<th>Restock timer</th>
-				<th>Cost</th>
-				<th>Category</th>
-			</tr>
-		</thead>';
 	foreach($xmlSave->children() as $types) {
 		echo "<script>window.XMLData['". $types[name] ."'] = {}</script>";
-
-		echo "<tr><td>" . $types[name] . "</td>";
 	    if(isset($types->nominal)) {
-			echo "<td>".$types->nominal . "</td>";
-			echo "<td>".$types->min . "</td>";
-			echo "<td>".$types->restock . "</td>";
-			echo "<td>".$types->cost . "</td>";
-			echo "<td>".$types->category[name] . "</td></tr>";
 			echo "<script>
 				window.XMLData['". $types[name] ."']['nominal'] = '". $types->nominal ."'
 				window.XMLData['". $types[name] ."']['min'] = '". $types->min ."'
 				window.XMLData['". $types[name] ."']['restock'] = '". $types->restock ."'
 				window.XMLData['". $types[name] ."']['cost'] = '". $types->cost ."'
 				window.XMLData['". $types[name] ."']['category'] = '". $types->category[name] ."'
+				window.XMLData['". $types[name] ."']['lifetime'] = '". $types->lifetime ."'
 			</script>";	
 
-	    } else {
-	    	echo "<td> - </td>";
-	    	echo "<td> - </td>";
-			echo "<td> - </td>";
-			echo "<td> - </td>";
-			echo "<td> - </td></tr>";
 	    }
 	}
-	echo '</table></div>';
 }
 
 // Apply changes
