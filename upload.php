@@ -31,17 +31,26 @@ if($filetype != "xml") {
 
 $approvedFile = FALSE;
 $tmpxml = simplexml_load_file($_FILES["uploadedfile"]["tmp_name"]) or die("Upload one of these files: <strong>economy.xml , events.xml , globals.xml , types.xml.</strong> Or your XML file is corrupt or containing errors");
-if($tmpxml->getName() == "types") { $filename = 'types_'; $approvedFile = TRUE; }
-if($tmpxml->getName() == "economy") { $filename = 'economy_'; $approvedFile = TRUE; }
-if($tmpxml->getName() == "events") { $filename = 'events_'; $approvedFile = TRUE; }
-if($tmpxml->getName() == "variables") { $filename = 'globals_'; $approvedFile = TRUE; }
 
-if(!$approvedFile) {
-	die("Upload one of these files: <strong>economy.xml , events.xml , globals.xml , types.xml. </strong>Or your XML file is corrupt or containing errors");
+switch ($tmpxml->getName()) {
+	case "types":
+		$filename = 'types';
+		break;
+	case "economy":
+		$filename = 'economy';
+		break;
+	case "events":
+		$filename = 'events';
+		break;
+	case "variables":
+		$filename = 'globals';
+		break;
+	default:
+		die("Upload one of these files: <strong>economy.xml , events.xml , globals.xml , types.xml. </strong>Or your XML file is corrupt or containing errors");
 }
 
 // if everything is ok, try to upload file
-$target_file = $uploadDir . basename($_FILES["uploadedfile"]) . $filename . $_SESSION["hash"].'.'.$filetype;
+$target_file = $uploadDir . basename($_FILES["uploadedfile"]) . $filename . '_' . $_SESSION["hash"].'.'.$filetype;
 
 if($uploadOk) {
 	if (!file_exists($uploadDir)) {
@@ -51,7 +60,7 @@ if($uploadOk) {
 
 	if (move_uploaded_file($_FILES["uploadedfile"]["tmp_name"], $target_file)) {
 		chmod($target_file, 0777);
-		header('Location: xml.php?upload');
+		header('Location: '$filename'.php?upload');
 	} else {
 		die("Sorry, there was an error uploading your file.");
 	}
