@@ -13,18 +13,17 @@ if(!isset($_COOKIE['cookiemonster'])) {
 ?>
 <?PHP include "header.html"; ?>
 
-<div class="container-fluid">
+<div class="container">
 
 	<!-- DROP ZONE -->
-	<div id="uploader">Drop File Here</div>
+	<center><div id="uploader">Drop File Here<br><br>OR<br><br>use the buttons below</div></center>
 
 	<!-- STATUS -->
 	<div id="upstat"></div>
 
 	<form class="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
 		<br />
-	    <input type="file" name="uploadedfile" id="uploadedfile" accept=".xml">
-	    <input type="submit" value="Upload XML file" name="submit">
+	    <input type="file" name="uploadedfile" id="uploadedfile" accept=".xml"><input type="submit" value="Upload XML file" name="submit">
 	</form>
 </div>
 </body>

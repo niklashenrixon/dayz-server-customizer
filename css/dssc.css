@@ -24,14 +24,21 @@ body {
     background-position: center center;
 }
 
+.cookies {
+	font-size: 10px;
+	font-style: italic;
+}
+
 #uploader {
 	margin-top: 100px;
+	padding-top: 80px;
 	text-align: center;
 	border-radius: 15px;
 	background: #60575e;
-	padding: 20px; 
 	width: 400px;
-	height: 350px; 
+	height: 350px;
+	border: 2px dashed #000;
+	font-size: 24px;
 }
 
 #uploader.highlight {
