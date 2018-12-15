@@ -1,14 +1,8 @@
-<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-<script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
-
-<script>window.XMLData = {}</script>
-<div id="root"></div>
-
 <?PHP
 session_start();
 include "header.html";
 
+echo '<script>window.XMLData = {}</script><div id="root"></div>';
 
 $form = '
 	Choose how the loot will be modified and press apply to see the change:<br/>
