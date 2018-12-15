@@ -1,9 +1,4 @@
-<?PHP
-session_start();
-?>
-<?PHP include "header.html"; ?>
-<body class="uploads">
-
+<?PHP session_start(); include "header.html"; ?>
 <?PHP
 
 $uploadOk = 1;

@@ -13,12 +13,19 @@ if(!isset($_COOKIE['cookiemonster'])) {
 ?>
 <?PHP include "header.html"; ?>
 
-<form action="upload.php" method="post" enctype="multipart/form-data">
-    Upload your "types.xml" file here:<br >
-    <input type="file" name="uploadedfile" id="uploadedfile">
-    <input type="submit" value="Upload XML file" name="submit">
-</form>
-<p>the types.xml file is located "C:\Program Files (x86)\Steam\steamapps\common\DayZServer\mpmissions\dayzOffline.chernarusplus\db\" HERE</p>
+<div class="container-fluid">
 
+	<!-- DROP ZONE -->
+	<div id="uploader">Drop File Here</div>
+
+	<!-- STATUS -->
+	<div id="upstat"></div>
+
+	<form class="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
+		<br />
+	    <input type="file" name="uploadedfile" id="uploadedfile" accept=".xml">
+	    <input type="submit" value="Upload XML file" name="submit">
+	</form>
+</div>
 </body>
 </html>

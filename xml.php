@@ -1,6 +1,6 @@
-<?PHP include "header.html"; ?>
-<?PHP
+<?PHP 
 session_start();
+include "header.html";
 
 $form = '
 	Choose how the loot will be modified and press apply to see the change:<br/>

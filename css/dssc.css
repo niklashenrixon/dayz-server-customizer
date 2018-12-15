@@ -6,9 +6,8 @@
 
 body {
 	font-family: 'Montserrat', sans-serif;
-	background-color: #24262c;
+	background-color: #170c14;
 	color: #fff;
-	color: #d11212;
 }
 
 .uploads {
@@ -19,4 +18,26 @@ body {
 	height: 200px;
 	width: 100%;
 	padding-top: 15px;
+	background-image: url("../img/banner2.jpg");
+	background-size:     cover;
+    background-repeat:   no-repeat;
+    background-position: center center;
+}
+
+#uploader {
+	margin-top: 100px;
+	text-align: center;
+	border-radius: 15px;
+	background: #60575e;
+	padding: 20px; 
+	width: 400px;
+	height: 350px; 
+}
+
+#uploader.highlight {
+	background: #212021;
+}
+
+.uploadForm {
+	text-align: center;
 }
