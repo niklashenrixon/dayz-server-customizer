@@ -1,5 +1,4 @@
-<?PHP session_start(); include "header.html"; ?>
-<?PHP
+<?PHP session_start(); include "header.html";
 
 $uploadOk = 1;
 $filetype = strtolower(pathinfo($_FILES["uploadedfile"]["name"], PATHINFO_EXTENSION));
