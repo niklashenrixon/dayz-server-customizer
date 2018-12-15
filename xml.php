@@ -6,7 +6,7 @@
 <div id="root"></div>
 <script type="text/babel" src="app.jsx"></script>
 
-after
+
 <?PHP
 session_start();
 
