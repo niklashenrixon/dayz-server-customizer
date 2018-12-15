@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>DSSC - Dayz standalone server customizer</title>
-	<meta charset="utf-8" />
-	<link rel="icon" type="image/png" href="favicon.png" />
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/dssc.css">
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-</head>
-<body>
-<section class="header">
-	<?PHP include "header.html"; ?>
-</section>
+<?PHP include "header.html"; ?>
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+<div id="root"></div>
+<script type="text/babel" src="app.jsx"></script>
+
+after
 <?PHP
 session_start();
 
@@ -45,7 +40,7 @@ if(isset($_GET['upload'])) {
 	echo '<a href="?save&amount='.$_GET['amount'].'">Save changes to file and download</a><br />';
 
 	// Load XML
-	$xmlSave = simplexml_load_file('uploads/'.$_COOKIE['cookiemonster'].'/types_'.$_SESSION["hash"].'.xml') or die("Error");
+	$xmlSave = simplexml_load_file('uploads/'.$_COOKIE['cookiemonster'].'/'.$_GET['upload'].'_'.$_SESSION["hash"].'.xml') or die("Error");
 
 	if($xmlSave->getName() == "types") { echo "The type is loot table"; }
 	if($xmlSave->getName() == "economy") { echo "The type is economy"; }
@@ -138,6 +133,8 @@ if(isset($_GET['save'])) {
 	echo "</h3>";
 }
 ?>
+
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
