@@ -2,9 +2,10 @@
 <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
 <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
-
-<div id="root"></div>
 <script type="text/babel" src="app.jsx"></script>
+<script>window.XMLData = {}</script>
+<div id="root"></div>
+
 
 
 <?PHP
@@ -59,6 +60,8 @@ if(isset($_GET['upload'])) {
 			</tr>
 		</thead>';
 	foreach($xmlSave->children() as $types) {
+		echo "<script>window.XMLData['". $types[name] ."'] = {}</script>";
+
 		echo "<tr><td>" . $types[name] . "</td>";
 	    if(isset($types->nominal)) {
 			echo "<td>".$types->nominal . "</td>";
@@ -66,6 +69,13 @@ if(isset($_GET['upload'])) {
 			echo "<td>".$types->restock . "</td>";
 			echo "<td>".$types->cost . "</td>";
 			echo "<td>".$types->category[name] . "</td></tr>";
+			echo "<script>
+				window.XMLData['". $types[name] ."']['nominal'] = '". $types->nominal ."'
+				window.XMLData['". $types[name] ."']['min'] = '". $types->min ."'
+				window.XMLData['". $types[name] ."']['restock'] = '". $types->restock ."'
+				window.XMLData['". $types[name] ."']['cost'] = '". $types->cost ."'
+				window.XMLData['". $types[name] ."']['category'] = '". $types->category[name] ."'
+			</script>";	
 
 	    } else {
 	    	echo "<td> - </td>";
