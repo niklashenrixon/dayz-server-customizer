@@ -62,6 +62,22 @@ const utilitiesStyle = {
 	padding: '15px'
 }
 
+const inputCharStyle = {
+	position: 'absolute',
+	top: '0px',
+	right: '10px',
+    color: 'black'
+}
+
+class SearchBox extends React.Component {
+	render() {
+		return (
+			<div>
+				<input placeholder="Search" onChange={this.props.onSearch} />
+			</div>
+		)
+	}
+}
 
 class NumberInput extends React.Component { 
 	constructor(props) {
@@ -72,21 +88,31 @@ class NumberInput extends React.Component {
 	onChange(e) {
 		const { value } = e.target 
 		if (/^\d+$/.test(value) || value === '') {
-			this.props.onChange(value)
+			if (this.props.max && value > this.props.max) { 
+				this.props.onChange(this.props.max) 
+			} else {
+				this.props.onChange(value)
+			}
+			
 		}
 	}
 
 	render() {
-		const { value, placeholder, ...restProps } = this.props
+		const { value, placeholder, character,  ...restProps } = this.props
 		return (
-			<input  
-				{...restProps} 
-				style={inputStyle}
-				type="text" 
-				value={this.props.value}
-				onChange={this.onChange}
-				placeholder={this.props.placeholder}
-			/>
+			<div style={{ position: 'relative' }}>
+				<input  
+					{...restProps} 
+					style={inputStyle}
+					type="number" 
+					value={this.props.value}
+					onChange={this.onChange}
+					placeholder={this.props.placeholder}
+				/>
+				{
+					character ? <div style={inputCharStyle}>{character}</div> : null
+				}
+			</div>
 		)
 	}
 }
@@ -118,10 +144,10 @@ class ItemCell extends React.Component {
 	}
 
 	render() {
-		const { value, onChange = false } = this.props 
+		const { value, onChange = false, ...restProps } = this.props 
 
 		return <div style={cellStyle}>{
-			value !== undefined && onChange ? <NumberInput onBlur={this.onBlur} value={this.state.value} onChange={this.onChange} /> : value
+			value !== null && onChange ? <NumberInput {...restProps} onBlur={this.onBlur} value={this.state.value} onChange={this.onChange} /> : value
 		}</div>
 	}
 }
@@ -142,9 +168,9 @@ class ItemRow extends React.Component {
 			<ItemCell value={name} />
 			<ItemCell onChange={ (value) => onChange('nominal', value) } value={nominal} />
 			<ItemCell onChange={ (value) => onChange('min', value) } value={min} />
-			<ItemCell onChange={ (value) => onChange('cost', value) } value={cost} />
-			<ItemCell onChange={ (value) => onChange('restock', value) } value={restock} />
-			<ItemCell onChange={ (value) => onChange('lifetime', value) } value={lifetime} />
+			<ItemCell onChange={ (value) => onChange('cost', value) } character="%" max={100} value={cost} />
+			<ItemCell onChange={ (value) => onChange('restock', value) } character="s" value={restock} />
+			<ItemCell onChange={ (value) => onChange('lifetime', value) } character="s" value={lifetime} />
 			<ItemCell value={category} />
 		</div>
 	}
@@ -217,11 +243,29 @@ class Utilities extends React.Component {
 					<Stepper type='restock' label='Restock Timer' onClick={this.props.onApplyMultiplier} />
 					<Stepper type='lifetime' label='Lifetime Timer' onClick={this.props.onApplyMultiplier} />
 				</div>
-					
+					<SearchBox onSearch={this.props.onSearch} />
 					<button onClick={this.props.onReset}>Reset</button>
+					<button onClick={this.props.onSyncMaxToMin}>Sync Max to Min</button>
+					<SaveButton onGenerateSerializedData={this.props.onGenerateSerializedData}/>
 				</div>		
 			</div>
 		)	
+	}
+}
+
+class SaveButton extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			data: []
+		}
+	}
+
+	render() {
+		return (<form method="post" onMouseDown={() => this.setState({ data: this.props.onGenerateSerializedData() })} action="engine.php">
+		    <input type="hidden" name="data" value={this.state.data} />
+		    <input type="submit" value="Save" />
+		</form>)
 	}
 }
 
@@ -233,13 +277,23 @@ class App extends React.Component {
 			sorted: false,
 			categories: [],
 			data: null,
-			filter: 'weapons'
+			filter: 'false',
+			searchString: ''
 		} 
 		this.handleValueChange = this.handleValueChange.bind(this)
 		this.onChangeCategory = this.onChangeCategory.bind(this)
 		this.onApplyMultiplier = this.onApplyMultiplier.bind(this)
-		this.loadData = this.loadData.bind(this)
 		this.applyToEligibleItems = this.applyToEligibleItems.bind(this)
+		this.onSyncMaxToMin = this.onSyncMaxToMin.bind(this)
+		this.generateSerializedData = this.generateSerializedData.bind(this)
+		this.loadData = this.loadData.bind(this)
+		this.onSearch = this.onSearch.bind(this)
+	}
+
+	componentDidMount() {
+		window.addEventListener('receiveData', () => {
+			this.loadData()
+		})
 	}
 
 	loadData() {
@@ -259,17 +313,23 @@ class App extends React.Component {
 		})
 	}
 
-	componentDidMount() {
-		this.loadData()
+	sendData() {
+		const data = JSON.stringify(this.state.data)
+		console.log('Sending payload to server ╰( ⁰ ਊ ⁰ )━☆ﾟ.*･｡ﾟ')
 	}
 
-	applyToEligibleItems(func) {
-		const { data, filter } = this.state
+	generateSerializedData() {
+		return JSON.stringify(this.state.data)
+	}
+
+	applyToEligibleItems(func, type) {
+		const { data, filter, searchString } = this.state
 		let eligibleItems = 0
 
 		const newData = data
 			.map(item => { 
-				 if (filter === 'false' || item.category === filter) {
+				console.log(item.value)
+				 if ((filter === 'false' || item.category === filter) && item.name.toLowerCase().search(searchString.toLowerCase()) > -1 && item[type] !== null) {
 				 	eligibleItems++
 				 	item = func(item)
 				 }
@@ -294,20 +354,20 @@ class App extends React.Component {
 		 	} else {
 		 		item[type] = Math.trunc(item[type] * multiplier) 
 		 	}
+		 	if (type === 'cost' && item['cost'] > 100) { item['cost'] = 100 }
 		 	return item
 		}
 
-		this.applyToEligibleItems(modifier)
+		this.applyToEligibleItems(modifier, type)
 	}
 
 	onSyncMaxToMin() {
 		const modifier = item => {
-			const { nominal } = item
-		 	item.min = item.max
+		 	item.min = item.nominal
 		 	return item
 		}
 
-		this.applyToEligibleItems(modifier)
+		this.applyToEligibleItems(modifier, true)
 	}
 
 	handleValueChange(idx, type, value) {
@@ -320,16 +380,23 @@ class App extends React.Component {
 		this.setState({ filter: e.target.value })
 	}
 
+	onSearch(e) {
+		this.setState({ searchString: e.target.value })
+	}
+
 	render() {
-		const { data, categories, filter } = this.state;
+		const { data, categories, filter, searchString } = this.state;
 		if (data === null) { return null }
 		return (
-			<div style={{ padding: '40px' }}>
+			<div style={{ padding: '15px 40px' }}>
 				<Utilities 
 					categories={categories}
 					onChangeCategory={this.onChangeCategory}
 					onApplyMultiplier={this.onApplyMultiplier}
 					onReset={this.loadData}
+					onSyncMaxToMin={this.onSyncMaxToMin}
+					onGenerateSerializedData={this.generateSerializedData}
+					onSearch={this.onSearch}
 				/>
 				<div style={tableStyle}>
 
@@ -344,7 +411,7 @@ class App extends React.Component {
 					</div>
 					{ 
 						data.reduce((filtered, item, idx) => {
-							if (filter === 'false' || item.category === filter) {
+							if ((filter === 'false' || item.category === filter) && item.name.toLowerCase().search(searchString.toLowerCase()) > -1) {
 								filtered.push(
 									<ItemRow
 										onChange={(type, value) => this.handleValueChange(idx, type, value)}
