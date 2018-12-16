@@ -2,6 +2,14 @@
 console.log('Hello!');
 const DEBUG_MODE = true 
 
+const TYPES = {
+	MAX: 'nominal',
+	MIN: 'min',
+	COST: 'cost',
+	RESTOCK: 'restock',
+	LIFETIME: 'lifetime'
+}
+
 const ArrowUp = () => (
 	<svg 
 	    width="100%"
@@ -41,6 +49,7 @@ const tableStyle = {
     borderSpacing:' 0 1px',
 	display: 'table',
 	width: '100%',
+	borderRadius: '5px'
 }
 
 const inputStyle = {
@@ -93,7 +102,6 @@ class NumberInput extends React.Component {
 			} else {
 				this.props.onChange(value)
 			}
-			
 		}
 	}
 
@@ -105,7 +113,7 @@ class NumberInput extends React.Component {
 					{...restProps} 
 					style={inputStyle}
 					type="number" 
-					value={this.props.value}
+					value={character === 'm' ? Math.round(this.props.value / 60) : this.props.value}
 					onChange={this.onChange}
 					placeholder={this.props.placeholder}
 				/>
@@ -166,11 +174,11 @@ class ItemRow extends React.Component {
 
 		return <div style={{ ...rowStyle }}>
 			<ItemCell value={name} />
-			<ItemCell onChange={ (value) => onChange('nominal', value) } value={nominal} />
-			<ItemCell onChange={ (value) => onChange('min', value) } value={min} />
-			<ItemCell onChange={ (value) => onChange('cost', value) } character="%" max={100} value={cost} />
-			<ItemCell onChange={ (value) => onChange('restock', value) } character="s" value={restock} />
-			<ItemCell onChange={ (value) => onChange('lifetime', value) } character="s" value={lifetime} />
+			<ItemCell onChange={ (value) => onChange(TYPES.MAX, value) } value={nominal} />
+			<ItemCell onChange={ (value) => onChange(TYPES.MIN, value) } value={min} />
+			<ItemCell onChange={ (value) => onChange(TYPES.COST, value) } character="%" max={100} value={cost} />
+			<ItemCell onChange={ (value) => onChange(TYPES.RESTOCK, value) } character="m" value={restock} />
+			<ItemCell onChange={ (value) => onChange(TYPES.LIFETIME, value) } character="m" value={lifetime} />
 			<ItemCell value={category} />
 		</div>
 	}
@@ -237,11 +245,11 @@ class Utilities extends React.Component {
 				<div>
 					Filter by category<CategoryFilter categories={this.props.categories} onChange={this.props.onChangeCategory} />
 					<div style={{ display: 'flex', justifyContent: 'space-between' }} >
-					<Stepper type='nominal' label='Maximum' onClick={this.props.onApplyMultiplier} />
-					<Stepper type='min' label='Minimum' onClick={this.props.onApplyMultiplier} />
-					<Stepper type='cost' label='Priority' onClick={this.props.onApplyMultiplier} />
-					<Stepper type='restock' label='Restock Timer' onClick={this.props.onApplyMultiplier} />
-					<Stepper type='lifetime' label='Lifetime Timer' onClick={this.props.onApplyMultiplier} />
+					<Stepper type={TYPES.MAX} label='Maximum' onClick={this.props.onApplyMultiplier} />
+					<Stepper type={TYPES.MIN} label='Minimum' onClick={this.props.onApplyMultiplier} />
+					<Stepper type={TYPES.COST} label='Priority' onClick={this.props.onApplyMultiplier} />
+					<Stepper type={TYPES.RESTOCK} label='Restock Timer' onClick={this.props.onApplyMultiplier} />
+					<Stepper type={TYPES.LIFETIME} label='Lifetime Timer' onClick={this.props.onApplyMultiplier} />
 				</div>
 					<SearchBox onSearch={this.props.onSearch} />
 					<button onClick={this.props.onReset}>Reset</button>
@@ -324,23 +332,19 @@ class App extends React.Component {
 
 	applyToEligibleItems(func, type) {
 		const { data, filter, searchString } = this.state
-		let eligibleItems = 0
 
 		const newData = data
-			.map(item => { 
-				console.log(item.value)
+			.map((item, idx) => { 
 				 if ((filter === 'false' || item.category === filter) && item.name.toLowerCase().search(searchString.toLowerCase()) > -1 && item[type] !== null) {
-				 	eligibleItems++
-				 	item = func(item)
+				 	item = func(item, idx)
+ 					if (type === TYPES.MIN && item[TYPES.MIN] > item[TYPES.MAX]) {
+						item[TYPES.MAX] = item[TYPES.MIN]
+					} else if (type === TYPES.MAX && item[TYPES.MAX] < item[TYPES.MIN]) {
+						item[TYPES.MIN] = item[TYPES.MAX]
+					}
 				 }
 				return item
 			})
-
-		if (DEBUG_MODE) {	
-			console.log('applyToEligibleItems')
-			console.log('For filter', filter)
-			console.log(`Applying to ${eligibleItems} items`)
-		}
 
 		this.setState({
 			data: newData
@@ -354,7 +358,7 @@ class App extends React.Component {
 		 	} else {
 		 		item[type] = Math.trunc(item[type] * multiplier) 
 		 	}
-		 	if (type === 'cost' && item['cost'] > 100) { item['cost'] = 100 }
+		 	if (type === TYPES.COST && item[TYPES.COST] > 100) { item[TYPES.COST] = 100 }
 		 	return item
 		}
 
@@ -363,7 +367,7 @@ class App extends React.Component {
 
 	onSyncMaxToMin() {
 		const modifier = item => {
-		 	item.min = item.nominal
+		 	item[TYPES.MIN] = item[TYPES.MAX]
 		 	return item
 		}
 
@@ -371,9 +375,14 @@ class App extends React.Component {
 	}
 
 	handleValueChange(idx, type, value) {
-		const newState = [...this.state.data]
-		newState[idx][type] = value
-		this.setState({ data: newState })
+
+		const modifier = (item, innerIdx) => {
+			if (idx === innerIdx) {
+				item[type] = value
+			} 
+			return item
+		}
+		this.applyToEligibleItems(modifier, type)
 	}
 
 	onChangeCategory(e) {
@@ -399,7 +408,6 @@ class App extends React.Component {
 					onSearch={this.onSearch}
 				/>
 				<div style={tableStyle}>
-
 					<div style={{ ...rowStyle, fontWeight: 'bold' }}>
 						<ItemCell value='Name' />
 						<ItemCell value='Maximum' />
