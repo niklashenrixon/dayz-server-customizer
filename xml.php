@@ -2,7 +2,7 @@
 session_start();
 include "header.html";
 
-echo '<script>window.XMLData = {}</script><div id="root"><img style="height: 164px; margin: 0 auto; display: block;" src="./img/some loader.gif" /></div>';
+echo '<script>window.XMLData = {}</script><div id="root"><img style="height: 164px; margin: 0 auto; display: block;" src="./img/200.gif" /></div>';
 
 $form = '
 	Choose how the loot will be modified and press apply to see the change:<br/>
@@ -109,7 +109,7 @@ if(isset($_GET['save'])) {
 ?>
 
 
-<script type="text/babel" src="app.jsx"></script>
+<script type="text/babel" src="app.jsx" rel="preload"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 </body>

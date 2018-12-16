@@ -1,5 +1,6 @@
 'use strict'
 console.log('Hello!');
+const DEBUG_MODE = true 
 
 const ArrowUp = () => (
 	<svg 
@@ -40,7 +41,6 @@ const tableStyle = {
     borderSpacing:' 0 1px',
 	display: 'table',
 	width: '100%',
-	padding: '20px'
 }
 
 const inputStyle = {
@@ -48,14 +48,18 @@ const inputStyle = {
 	border: 'none',
 	paddingLeft: '10px',
 	paddingRight: '10px',
-	width: '80%'
+	maxWidth: '150px',
+	width: '100%'
 }
 
 const utilitiesStyle = {
 	display: 'flex',
 	flexDirection: 'column',
 	background: '#212529',
-	width: '100%'
+	width: '100%',
+	marginBottom: '20px',
+	borderRadius: '5px',
+	padding: '15px'
 }
 
 
@@ -71,7 +75,6 @@ class NumberInput extends React.Component {
 			this.props.onChange(value)
 		}
 	}
-
 
 	render() {
 		const { value, placeholder, ...restProps } = this.props
@@ -98,6 +101,10 @@ class ItemCell extends React.Component {
 		}
 		this.onChange = this.onChange.bind(this)
 		this.onBlur = this.onBlur.bind(this)
+	}
+
+	componentWillReceiveProps({ value }) {
+		this.setState({ value })
 	}
 
 	onChange(value) {
@@ -209,7 +216,7 @@ class Utilities extends React.Component {
 					<Stepper type='cost' label='Priority' onClick={this.props.onApplyMultiplier} />
 					<Stepper type='restock' label='Restock Timer' onClick={this.props.onApplyMultiplier} />
 					<Stepper type='lifetime' label='Lifetime Timer' onClick={this.props.onApplyMultiplier} />
-					</div>
+				</div>
 					
 					<button onClick={this.props.onReset}>Reset</button>
 				</div>		
@@ -232,6 +239,7 @@ class App extends React.Component {
 		this.onChangeCategory = this.onChangeCategory.bind(this)
 		this.onApplyMultiplier = this.onApplyMultiplier.bind(this)
 		this.loadData = this.loadData.bind(this)
+		this.applyToEligibleItems = this.applyToEligibleItems.bind(this)
 	}
 
 	loadData() {
@@ -255,24 +263,51 @@ class App extends React.Component {
 		this.loadData()
 	}
 
-	onApplyMultiplier(type, multiplier) {
-		console.log('onApplyMultiplier', type, multiplier)
+	applyToEligibleItems(func) {
 		const { data, filter } = this.state
+		let eligibleItems = 0
+
 		const newData = data
 			.map(item => { 
 				 if (filter === 'false' || item.category === filter) {
-				 	if (multiplier < 0) {
-				 		item[type] = Math.trunc(item[type] / Math.abs(multiplier))
-				 	} else {
-				 		item[type] = Math.trunc(item[type] * multiplier) 
-				 	}
+				 	eligibleItems++
+				 	item = func(item)
 				 }
 				return item
 			})
 
+		if (DEBUG_MODE) {	
+			console.log('applyToEligibleItems')
+			console.log('For filter', filter)
+			console.log(`Applying to ${eligibleItems} items`)
+		}
+
 		this.setState({
 			data: newData
 		})
+	}
+
+	onApplyMultiplier(type, multiplier) {
+		const modifier = item => {
+		 	if (multiplier < 0) {
+		 		item[type] = Math.trunc(item[type] / Math.abs(multiplier))
+		 	} else {
+		 		item[type] = Math.trunc(item[type] * multiplier) 
+		 	}
+		 	return item
+		}
+
+		this.applyToEligibleItems(modifier)
+	}
+
+	onSyncMaxToMin() {
+		const modifier = item => {
+			const { nominal } = item
+		 	item.min = item.max
+		 	return item
+		}
+
+		this.applyToEligibleItems(modifier)
 	}
 
 	handleValueChange(idx, type, value) {
@@ -280,7 +315,6 @@ class App extends React.Component {
 		newState[idx][type] = value
 		this.setState({ data: newState })
 	}
-
 
 	onChangeCategory(e) {
 		this.setState({ filter: e.target.value })
