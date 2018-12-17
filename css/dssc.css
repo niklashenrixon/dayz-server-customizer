@@ -1,13 +1,54 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
-body {
+html, body {
 	font-family: 'Montserrat', sans-serif;
 	background-color: #170c14;
 	color: #fff;
 }
 
+a { color: #7cc501; }
+a:hover { color: #5c9201; text-decoration: none;}
+
 .uploads {
 	font-size: 16px;
+}
+
+.download {
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 13%;
+    font-size: 24px;
+}
+
+.pftitle {
+    font-size: 22px;
+    border-bottom: 1px solid #2a1a24;
+    padding-bottom: 18px;
+}
+
+.prevfilecont {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.prevfilecont p {
+    max-width: 90px;
+    padding: 0px;
+    font-size: 11px;
+    padding: 0 10px;
+}
+
+.prevfilecont a {
+    font-size: 13px;
+}
+
+.PrevFiles {
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 70px;
+    font-size: 13px;
+    line-height: 24px;
 }
 
 .header {
@@ -18,6 +59,33 @@ body {
 	background-size:     cover;
     background-repeat:   no-repeat;
     background-position: center center;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0px;
+    right: 0px;
+    text-align: center;
+    background: #080808;
+    /* padding: 5px 0 5px 0; */
+
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 40px;
+    z-index: 1000000;
+}
+.footer p {
+    font-size: 12px;
+    margin: 0;
+}
+
+.footer p a {
+    color: #e83e8c;
+}
+
+.footer p a:hover {
+    color: #c81768;
 }
 
 .cookies {
@@ -38,6 +106,7 @@ body {
     font-size: 24px;
     margin: 50px auto 0;
     line-height: 75px;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.3);
 }
 
 #uploader.highlight {
