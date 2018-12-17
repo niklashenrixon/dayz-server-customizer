@@ -1,3 +1,13 @@
+  window.addEventListener("dragover",function(e){
+    e = e || event;
+    e.preventDefault();
+  },false);
+  window.addEventListener("drop",function(e){
+    e = e || event;
+    e.preventDefault();
+  },false);
+  
+
 window.addEventListener("load", function () {
   // IF DRAG-DROP UPLOAD SUPPORTED
   if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -5,7 +15,9 @@ window.addEventListener("load", function () {
     const idleText = 'Drop config file here'
     /* [THE ELEMENTS] */
     var uploader = document.getElementById('uploader')
-
+    if (!uploader) {
+      return
+    }
     /* [VISUAL - HIGHLIGHT DROP ZONE ON HOVER] */
     uploader.addEventListener("dragenter", function (e) {
       e.preventDefault();
@@ -26,6 +38,7 @@ window.addEventListener("load", function () {
     });
 
     // ADD OUR OWN UPLOAD ACTION
+
     uploader.addEventListener("drop", function (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -43,10 +56,6 @@ window.addEventListener("load", function () {
           if (xhr.readyState === 4) {
             if (xhr.status === 200) {
               // SERVER RESPONSE
-              const video = document.getElementById('video') 
-              if (video) {
-                video.remove()
-              }
               const response = JSON.parse(xhr.response)
               if (response.error) {
                 uploader.innerHTML = idleText
@@ -58,6 +67,7 @@ window.addEventListener("load", function () {
               const evt = new CustomEvent('receiveData');
               window.dispatchEvent(evt)
               uploader.innerHTML = "Edit " + fileName + " or drop another one"
+              window.fileName = fileName
             }
           }
         };
