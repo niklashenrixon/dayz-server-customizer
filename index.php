@@ -2,26 +2,44 @@
 session_start();
 
 if(!isSet($_SESSION["hash"])) {
-	$_SESSION["hash"] = time().rand();
+    $_SESSION["hash"] = time().rand().rand().rand();
 }
 
 if(!isset($_COOKIE['cookiemonster'])) {
-	$cookie_value = time().rand();
-	setcookie('cookiemonster', $cookie_value, time()+60*60*24*365, "/"); // 365 dayz
+    $cookie_value = time().rand().rand().rand();
+    setcookie('cookiemonster', $cookie_value, time()+606024*365, "/"); // 365 dayz
 }
 
 ?>
-<?PHP include "header.html"; ?>
+<?PHP include "header.php"; ?>
 
-<div class="container">
+<div style="max-width: 1400px; margin: 0 auto;">
 	<!-- DROP ZONE -->
-	
 	<div id="uploadWrapper">
 		<div id="uploader">Drop config file here</div>
+		<div style="width: 100%; padding: 40px; text-align: center; font-family: monospace;">Only types.xml format supported at the moment</div>
 	</div>
-	<div id="video">VIDEO</div>
 	<div id="root"></div>
 </div>
-<script type="text/babel" src="app.jsx" rel="preload"></script>
+	<script type="text/javascript">
+	  try {
+	    new Function("(a = 0) => a");
+	  } catch (err) {
+	    alert('Your browser is outdate, please update');
+	  }
+	</script>
+	<script type="text/babel" src="js/app/constants.jsx"></script>
+	<script type="text/babel" src="js/app/style.jsx"></script>
+	<script type="text/babel" src="js/app/utilities.jsx"></script>
+	<script type="text/babel" src="js/app/index.jsx"></script>
+
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-50877463-3"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-50877463-3');
+	</script>
 </body>
 </html>

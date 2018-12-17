@@ -62,13 +62,13 @@ if($uploadOk) {
 			$data->{$itemName}->category = $category;
 			$data->{$itemName}->lifetime = $obj['lifetime'];
 		}
-		$janne = json_encode($data, JSON_PRETTY_PRINT);
+		$response->data = $data;
+		$response->fileType = $filename;
+		$janne = json_encode($response, JSON_PRETTY_PRINT);
 		print_r($janne);
 	} else {
 		echo json_encode("{ error: 'FUCK YOU'}");
  	}
-
-
 }
 
 
