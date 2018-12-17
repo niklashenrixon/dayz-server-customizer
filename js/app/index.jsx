@@ -1,15 +1,5 @@
 'use strict'
 
-class SearchBox extends React.Component {
-	render() {
-		return (
-			<div>
-				<input placeholder="Search" onChange={this.props.onSearch} />
-			</div>
-		)
-	}
-}
-
 class NumberInput extends React.Component { 
 	constructor(props) {
 		super(props);
@@ -180,50 +170,6 @@ const sorter = (trait, ascending) => (a, b) => {
     }
 }	
 
-
-class Button extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			down: false
-		}
-
-		this.colors = {
-			bg: {
-				idle: '#170c14',
-				active: 'rgb(37, 20, 28)'	
-			},
-			text: {
-				idle: 'rgb(189, 183, 177)',
-				active: 'rgb(255, 255, 255)'
-			}
-		}
-
-		this.onMouseOver = this.onMouseOver.bind(this)
-		this.onMouseOut = this.onMouseOut.bind(this)
-	}
-
-	onMouseOver() {
-		this.setState({ down: true })
-		if (this.props.onMouseOver) { this.props.onMouseOver() }
-	}
-
-	onMouseOut() {
-		this.setState({ down: false })
-		if (this.props.onMouseOut) { this.props.onMouseOut() }
-	}
-
-	render() {
-		return (
-			<div onClick={this.props.onClick} onMouseDown={this.props.onMouseDown} onMouseUp={this.props.onMouseUp} onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut} style={{ marginRight: '15px', cursor: 'pointer',  transition: 'background .3s linear', boxShadow: '0px 2px 4px rgba(0,0,0,0.3)', border: '1px solid "rgb(22, 24, 28)', display: 'inline-block', borderRadius: '5px', background: this.state.down ? this.colors.bg.active : this.colors.bg.idle, minWidth: '150px', height: '43px'  }}>
-				<div style={{ transition: 'color .3s linear', color: this.state.down ? this.colors.text.active : this.colors.text.idle, fontFamily: 'Verdana',lineHeight: '44px', fontSize: '13px', textAlign: 'center' }}>
-					{ this.props.label }
-				</div>
-			</div>
-		)
-	}
-}
-
 class App extends React.Component {
 
 	constructor(props) {
@@ -372,7 +318,7 @@ class App extends React.Component {
 
 	render() {
 		const { data, categories, filter, searchString, sorted } = this.state;
-		if (data === null) { return null }
+		if (data === null) { return <h1 style={{ textAlign: 'center' }}>Drag & Drop config file to get started</h1> }
 		return (
 			<div style={{ padding: '15px 40px' }}>
 				<Utilities 
