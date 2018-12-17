@@ -1,15 +1,12 @@
 <?PHP
 session_start();
-
 if(!isSet($_SESSION["hash"])) {
     $_SESSION["hash"] = time().rand().rand().rand();
 }
-
 if(!isset($_COOKIE['cookiemonster'])) {
     $cookie_value = time().rand().rand().rand();
     setcookie('cookiemonster', $cookie_value, time()+606024*365, "/"); // 365 dayz
 }
-
 ?>
 <?PHP include "header.php"; ?>
 
@@ -37,7 +34,6 @@ if(!isset($_COOKIE['cookiemonster'])) {
 	  window.dataLayer = window.dataLayer || [];
 	  function gtag(){dataLayer.push(arguments);}
 	  gtag('js', new Date());
-
 	  gtag('config', 'UA-50877463-3');
 	</script>
 </body>
