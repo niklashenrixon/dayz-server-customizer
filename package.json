@@ -6,7 +6,7 @@
   "license": {
     "type": "MIT",
     "url": "https://www.opensource.org/licenses/mit-license.php"
-    },
+  },
   "scripts": {
     "build": "babel js/app -d build"
   },
