@@ -12,7 +12,7 @@ if(!isset($_COOKIE['cookiemonster'])) {
 
 <div style="max-width: 1400px; margin: 0 auto;">
 
-	<div style="width: 100%; padding: 10px 0; text-align: center; font-family: monospace;">Only types.xml format supported at the moment</div>
+	<div style="width: 100%; padding: 10px 0; text-align: center; font-family: monospace;">Only <mark>types.xml</mark> format supported at the moment</div>
 	<div id="root">
 		<h1 style="text-align: center;">Drag & Drop config file to get started</h1>
 	</div>

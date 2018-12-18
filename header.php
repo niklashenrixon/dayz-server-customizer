@@ -46,6 +46,6 @@
 </section>
 
 <section class="footer">
-		<p><code>alpha build - this breaks about 1 time per minute</code></p>
-		<p><a href="https://streamlabs.com/nix0npc" target="_blank">If you like it, put a beer in it 🍺</a></p>
+		<p><code><a href="https://github.com/niklashenrixon/dayz-server-customizer" target="_blank">release 1.0</a> - only <mark>types.xml</mark> format supported at the moment</code></p>
+		<p><code><a href="https://streamlabs.com/nix0npc" target="_blank">Buy us a beer 🍺</a></code></p>
 </section>
