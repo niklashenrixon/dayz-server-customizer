@@ -8,7 +8,7 @@
     "url": "https://www.opensource.org/licenses/mit-license.php"
   },
   "scripts": {
-    "build": "babel js/app -d build"
+    "build": "babel js -d build"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
