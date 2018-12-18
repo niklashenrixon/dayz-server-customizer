@@ -6,7 +6,6 @@
 	<link rel="icon" type="image/png" href="favicon.png" />
 	<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
 	<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
-	<script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" async defer>
 	<link rel="stylesheet" type="text/css" href="css/dssc.css" async defer>
 	<script src="js/upload.js"></script>

@@ -37,7 +37,6 @@ class NumberInput extends React.Component {
 	}
 }
 
-
 class ItemCell extends React.Component {
 
 	constructor(props) {
