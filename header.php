@@ -8,7 +8,7 @@
 	<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" async defer>
 	<link rel="stylesheet" type="text/css" href="css/dssc.css" async defer>
-	<script src="js/upload.js"></script>
+	<script src="build/upload.js"></script>
 </head>
 <body>
 <?PHP
@@ -45,6 +45,6 @@
 </section>
 
 <section class="footer">
-		<p><code><a href="https://github.com/niklashenrixon/dayz-server-customizer" target="_blank">release 1.0</a> - only <mark>types.xml</mark> format supported at the moment</code></p>
+		<p><code><a href="https://github.com/niklashenrixon/dayz-server-customizer/releases" target="_blank">release 1.0.1</a> - only <mark>types.xml</mark> format supported at the moment</code></p>
 		<p><code><a href="https://streamlabs.com/nix0npc" target="_blank">Buy us a beer 🍺</a></code></p>
 </section>

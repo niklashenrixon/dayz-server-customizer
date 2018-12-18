@@ -24,10 +24,10 @@ if(!isset($_COOKIE['cookiemonster'])) {
 	    alert('Your browser is outdate, please update');
 	  }
 	</script>
-	<script type="text/javascript" src="build/constants.js"></script>
-	<script type="text/javascript" src="build/style.js"></script>
-	<script type="text/javascript" src="build/utilities.js"></script>
-	<script type="text/javascript" src="build/index.js"></script>
+	<script type="text/javascript" src="build/app/constants.js"></script>
+	<script type="text/javascript" src="build/app/style.js"></script>
+	<script type="text/javascript" src="build/app/utilities.js"></script>
+	<script type="text/javascript" src="build/app/index.js"></script>
 
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-50877463-3"></script>
 	<script>
