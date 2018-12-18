@@ -1,0 +1,19 @@
+{
+  "name": "dayz-server-customizer",
+  "version": "1.0.0",
+  "description": "The ultimate tool for modifing dayz server loot tables",
+  "homepage": "https://dayz.skyn1.se/",
+  "license": {
+    "type": "MIT",
+    "url": "https://www.opensource.org/licenses/mit-license.php"
+    },
+  "scripts": {
+    "build": "babel js/app -d build"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-react": "^7.0.0"
+  }
+}

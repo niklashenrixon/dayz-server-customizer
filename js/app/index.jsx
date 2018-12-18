@@ -25,7 +25,7 @@ class NumberInput extends React.Component {
 					{...restProps} 
 					style={inputStyle}
 					type="number" 
-					value={character === 'm' ? Math.round(this.props.value / 60) : this.props.value}
+					value={this.props.value}
 					onChange={this.onChange}
 					placeholder={this.props.placeholder}
 				/>
@@ -36,7 +36,6 @@ class NumberInput extends React.Component {
 		)
 	}
 }
-
 
 class ItemCell extends React.Component {
 
@@ -58,8 +57,9 @@ class ItemCell extends React.Component {
 	}
 
 	onBlur() {
-		if (this.state.value !== this.props.value) {
-			this.props.onChange(this.state.value)
+		const { value } = this.state
+		if (value !== this.props.value) {
+			this.props.onChange(value)
 		}
 	}
 
@@ -93,8 +93,8 @@ class ItemRow extends React.Component {
 			<ItemCell onChange={ (value) => onChange(TYPES.MAX, value) } value={nominal} />
 			<ItemCell onChange={ (value) => onChange(TYPES.MIN, value) } value={min} />
 			<ItemCell onChange={ (value) => onChange(TYPES.PRIORITY, value) } character="%" max={100} value={cost} />
-			<ItemCell onChange={ (value) => onChange(TYPES.RESTOCK, value) } character="m" value={restock} />
-			<ItemCell onChange={ (value) => onChange(TYPES.LIFETIME, value) } character="m" value={lifetime} />
+			<ItemCell onChange={ (value) => onChange(TYPES.RESTOCK, value) } character="s"  value={restock} />
+			<ItemCell onChange={ (value) => onChange(TYPES.LIFETIME, value) } character="s"  value={lifetime} />
 			<ItemCell value={category} />
 		</div>
 	}
@@ -297,7 +297,7 @@ class App extends React.Component {
 	}
 
 	handleValueChange(idx, type, value) {
-
+		console.log('handleValueChange', idx, type, value);
 		const modifier = (item, innerIdx) => {
 			if (idx === innerIdx) {
 				item[type] = value
@@ -337,7 +337,7 @@ class App extends React.Component {
 							if ((filter === 'false' || item.category === filter) && item.name.toLowerCase().search(searchString.toLowerCase()) > -1) {
 								filtered.push(
 									{
-										key: item.name,
+										key: `${idx}_${item.name}`,
 										onChange: (type, value) => this.handleValueChange(idx, type, value),
 										...item
 									}
