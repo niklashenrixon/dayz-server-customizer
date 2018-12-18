@@ -4,8 +4,8 @@
 	<title>DSSC - Dayz standalone server customizer</title>
 	<meta charset="utf-8" />
 	<link rel="icon" type="image/png" href="favicon.png" />
-	<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+	<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+	<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
 	<script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" async defer>
 	<link rel="stylesheet" type="text/css" href="css/dssc.css" async defer>
