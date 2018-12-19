@@ -21,6 +21,7 @@ const cellStyle = {
 const tableStyle = {
     borderCollapse: 'collapse',
 	display: 'table',
+	marginBottom: '50px',
 	...containerStyle
 }
 
