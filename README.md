@@ -16,10 +16,4 @@
 
 NIXON                      |  iJigg
 :-------------------------:|:-------------------------:
-![https://github.com/niklashenrixon](https://avatars0.githubusercontent.com/u/5651193?s=90&v=4)  |  ![2](https://avatars3.githubusercontent.com/u/3774771?s=90&v=4)
-
-<a href="https://github.com/niklashenrixon" target="_blank"><img src="https://avatars0.githubusercontent.com/u/5651193?s=90&v=4"></a>  
-**NIXON**
-
-<a href="https://github.com/iJigg" target="_blank"><img src="https://avatars3.githubusercontent.com/u/3774771?s=90&v=4"></a>  
-**iJigg**
+![](https://avatars0.githubusercontent.com/u/5651193?s=90&v=4)  |  ![](https://avatars3.githubusercontent.com/u/3774771?s=90&v=4)
