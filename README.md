@@ -10,6 +10,7 @@
 ## Version History
 [**A link to all releases**](https://github.com/niklashenrixon/dayz-server-customizer/releases/)
 
+- [**1.0.2**](https://github.com/niklashenrixon/dayz-server-customizer/releases/tag/v1.0.2) (2018/12/19): Fixed a bug where you couldn't see the last row in the item list
 - [**1.0.1**](https://github.com/niklashenrixon/dayz-server-customizer/releases/tag/v1.0.1) (2018/12/19): Fixed a bug where you couldn't type into some fields
 - [**1.0.0**](https://github.com/niklashenrixon/dayz-server-customizer/releases/tag/dssc) (2018/12/19): Initial release
 
