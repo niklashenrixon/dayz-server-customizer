@@ -4,6 +4,7 @@
 
 [**https://dayz.skyn1.se/**](https://dayz.skyn1.se/)
 
+
 ![Logo](https://i.redd.it/xy5be0g1i2521.png)
 
 ## Version History
@@ -13,8 +14,8 @@
 
 ## Contributors
 
-<a href="https://github.com/niklashenrixon" target="_blank"><img src="https://avatars0.githubusercontent.com/u/5651193?s=460&v=4"></a>  
+<a href="https://github.com/niklashenrixon" target="_blank"><img src="https://avatars0.githubusercontent.com/u/5651193?s=90&v=4"></a>  
 **NIXON**
 
-<a href="https://github.com/iJigg" target="_blank"><img src="https://avatars3.githubusercontent.com/u/3774771?s=460&v=4"></a>  
+<a href="https://github.com/iJigg" target="_blank"><img src="https://avatars3.githubusercontent.com/u/3774771?s=90&v=4"></a>  
 **iJigg**
