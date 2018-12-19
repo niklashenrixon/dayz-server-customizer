@@ -9,8 +9,8 @@
 
 ## Version History
 
-- [**1.0.0**](https://dayz.skyn1.se/)   (10/18/2013): Initial release
-- [**1.0.1**](https://dayz.skyn1.se//)  (10/22/2013): Fixed a bug where you couldn't type into some fields
+- [**1.0.0**](https://dayz.skyn1.se/) (2018/12/19): Initial release
+- [**1.0.1**](https://dayz.skyn1.se//) (2018/12/19): Fixed a bug where you couldn't type into some fields
 
 ## Contributors
 
