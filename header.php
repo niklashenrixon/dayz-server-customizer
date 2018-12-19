@@ -45,6 +45,6 @@
 </section>
 
 <section class="footer">
-		<p><code><a href="https://github.com/niklashenrixon/dayz-server-customizer/releases" target="_blank">release 1.0.1</a> - only <mark>types.xml</mark> format supported at the moment</code></p>
+		<p><code><a href="https://github.com/niklashenrixon/dayz-server-customizer/releases" target="_blank">[release 1.0.1]</a> ~ <a href="https://www.reddit.com/r/dayz/comments/a7fsvt/dayz_standalone_server_customizer_httpsdayzskyn1se/" target="_blank">Report suggestions or problems here plis 🐒🐒🐒🐒</a></code></p>
 		<p><code><a href="https://streamlabs.com/nix0npc" target="_blank">Buy us a beer 🍺</a></code></p>
 </section>
