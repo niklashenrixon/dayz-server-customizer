@@ -7,6 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" async defer>
 	<link rel="stylesheet" type="text/css" href="css/dssc.css" async defer>
 	<script src="dist/upload.js"></script>
+
 </head>
 <body>
 <?PHP
@@ -43,6 +44,6 @@
 </section>
 
 <section class="footer">
-		<p><code><a href="https://github.com/niklashenrixon/dayz-server-customizer" target="_blank">release 1.0</a> - only <mark>types.xml</mark> format supported at the moment</code></p>
-		<p><code><a href="https://streamlabs.com/nix0npc" target="_blank">Buy us a beer 🍺</a></code></p>
+		<p><code><a href="https://github.com/niklashenrixon/dayz-server-customizer/releases" target="_blank">[release 1.0.2]</a> ~ <a href="https://www.reddit.com/r/dayz/comments/a7fsvt/dayz_standalone_server_customizer_httpsdayzskyn1se/" target="_blank">Report suggestions or problems here plis 🐒🐒🐒🐒</a></code></p>
+		<p><code><a href="http://buymeacoff.ee/tHoAcuy" target="_blank">Buy us a coffee 🍺</a></code></p>
 </section>
