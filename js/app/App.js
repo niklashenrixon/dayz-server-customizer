@@ -1,124 +1,22 @@
 'use strict'
+import React from 'react'
+import { TYPES, DEBUG_MODE } from './constants'
+import Utilities from './components/utilities/utilities'
+import HeaderRow from './components/HeaderRow'
+import ItemRow, { SkeletonRow } from './components/ItemRow'
+import VisibilitySensor from 'react-visibility-sensor'
 
-class NumberInput extends React.Component { 
-	constructor(props) {
-		super(props);
-		this.onChange = this.onChange.bind(this)
-	}
-
-	onChange(e) {
-		const { value } = e.target 
-		if (/^\d+$/.test(value) || value === '') {
-			if (this.props.max && value > this.props.max) { 
-				this.props.onChange(this.props.max) 
-			} else {
-				this.props.onChange(value)
-			}
-		}
-	}
-
-	render() {
-		const { value, placeholder, character,  ...restProps } = this.props
-		return (
-			<div style={{ position: 'relative' }}>
-				<input  
-					{...restProps} 
-					style={inputStyle}
-					type="number" 
-					value={this.props.value}
-					onChange={this.onChange}
-					placeholder={this.props.placeholder}
-				/>
-				{
-					character ? <div style={inputCharStyle}>{character}</div> : null
-				}
-			</div>
-		)
-	}
+const containerStyle = {
+    boxShadow: '0px 2px 4px rgba(0,0,0,0.3)',
+    background: '#212529',
+    width: '100%',
+    borderRadius: '5px',
 }
 
-class ItemCell extends React.Component {
-
-	constructor(props) {
-		super(props)
-		this.state = {
-			value: this.props.value
-		}
-		this.onChange = this.onChange.bind(this)
-		this.onBlur = this.onBlur.bind(this)
-	}
-
-	componentWillReceiveProps({ value }) {
-		this.setState({ value })
-	}
-
-	onChange(value) {
-		this.setState({ value })
-	}
-
-	onBlur() {
-		const { value } = this.state
-		if (value !== this.props.value) {
-			this.props.onChange(value)
-		}
-	}
-
-	render() {
-		const { value, onChange = false, ...restProps } = this.props 
-
-		return <div style={{...cellStyle, ...this.props.style}}>
-			<div style={{ maxWidth: '150px'}}>
-				{
-					value !== null && onChange ? <NumberInput {...restProps} onBlur={this.onBlur} value={this.state.value} onChange={this.onChange} /> : value
-				}
-			</div>
-		</div>
-	}
-}
-
-class ItemRow extends React.Component {
-
-	constructor(props) {
-		super(props)
-		this.state = {
-			...this.props 
-		}
-	}
-
-	render() {
-		const { name, nominal, min, restock, cost, category, lifetime, onChange  } = this.props;
-
-		return <div style={{ ...rowStyle }}>
-			<ItemCell value={name} style={{ fontSize: '14px' }} />
-			<ItemCell onChange={ (value) => onChange(TYPES.MAX, value) } value={nominal} />
-			<ItemCell onChange={ (value) => onChange(TYPES.MIN, value) } value={min} />
-			<ItemCell onChange={ (value) => onChange(TYPES.PRIORITY, value) } character="%" max={100} value={cost} />
-			<ItemCell onChange={ (value) => onChange(TYPES.RESTOCK, value) } character="s"  value={restock} />
-			<ItemCell onChange={ (value) => onChange(TYPES.LIFETIME, value) } character="s"  value={lifetime} />
-			<ItemCell value={category} />
-		</div>
-	}
-}
-
-class HeaderRow extends React.Component {
-	render() {
-		return (
-			<div style={{ ...rowStyle, fontWeight: 'bold' }}>
-				{
-					this.props.categories.map(category => {
-						return (
-							<div key={category.name} style={{...cellStyle, position: 'relative', cursor: 'pointer'}} onClick={() => this.props.onClick(category.key)}>
-								{ 
-									this.props.sorted.trait === category.key ? <span style={{ position: 'absolute', left: '5px' }}>{ this.props.sorted.asc ? '▼' : '▲' }</span> : null
-								}
-								<ItemCell value={category.name} />
-							</div>
-						)
-					})
-				}
-			</div>
-		)
-	}
+const tableStyle = {
+    borderCollapse: 'collapse',
+	display: 'table',
+	...containerStyle
 }
 
 const categoryNames = [
@@ -170,7 +68,7 @@ const sorter = (trait, ascending) => (a, b) => {
     }
 }	
 
-class App extends React.Component {
+export default class App extends React.Component {
 
 	constructor(props) {
 		super(props)
@@ -332,7 +230,33 @@ class App extends React.Component {
 				/>
 				<div style={tableStyle}>
 					<HeaderRow onClick={this.sortBy} sorted={sorted} categories={categoryNames}/>
-					{ 
+						{
+							data.reduce((filtered, item, idx) => {
+								if ((filter === 'false' || item.category === filter) && item.name.toLowerCase().search(searchString.toLowerCase()) > -1) {
+									filtered.push(
+										{
+											key: `${idx}_${item.name}`,
+											onChange: (type, value) => this.handleValueChange(idx, type, value),
+											...item
+										}
+									)
+								}
+								return filtered
+							}, []).sort((a, b) => sorter(sorted.trait, sorted.asc)(a, b)).map(item => 
+								<VisibilitySensor partialVisibility>
+									{
+										({ isVisible }) => isVisible ? <ItemRow {...item} /> : <SkeletonRow value={item.name} />
+									}
+								</VisibilitySensor>)
+						}
+					
+				</div>
+			</div>	
+		)
+	}
+}
+
+/*
 						data.reduce((filtered, item, idx) => {
 							if ((filter === 'false' || item.category === filter) && item.name.toLowerCase().search(searchString.toLowerCase()) > -1) {
 								filtered.push(
@@ -344,13 +268,10 @@ class App extends React.Component {
 								)
 							}
 							return filtered
-						}, []).sort((a, b) => sorter(sorted.trait, sorted.asc)(a, b)).map(item => <ItemRow {...item} />)
-					}
-				</div>
-			</div>	
-		)
-	}
-}
-
-const domContainer = document.querySelector('#root');
-ReactDOM.render(React.createElement(App), domContainer);
+						}, []).sort((a, b) => sorter(sorted.trait, sorted.asc)(a, b)).map(item => 
+							<VisibilitySensor partialVisibility>
+								{
+									({ isVisible }) => isVisible ? <ItemRow {...item} /> : <SkeletonRow value={item.name} />
+								}
+							</VisibilitySensor>)
+*/

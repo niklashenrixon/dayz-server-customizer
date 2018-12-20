@@ -1,6 +1,6 @@
-const DEBUG_MODE = true 
+export const DEBUG_MODE = true;
 
-const TYPES = {
+export const TYPES = {
 	NAME: 'name',
 	MAX: 'nominal',
 	MIN: 'min',
