@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>DSSC - Dayz standalone server customizer TEST</title>
+	<title>DSSC - Dayz standalone server customizer</title>
 	<meta charset="utf-8" />
 	<link rel="icon" type="image/png" href="favicon.png" />
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" async defer>
