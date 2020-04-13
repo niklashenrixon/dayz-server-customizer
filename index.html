@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" async defer>
+        <link rel="stylesheet" type="text/css" href="css/dssc.css" async defer>
+    </head>
+    <body>
+        <div style="max-width: 1400px; margin: 0 auto;">
+
+            <div style="width: 100%; padding: 10px 0; text-align: center; font-family: monospace;">Only <mark>types.xml</mark> format supported at the moment</div>
+            <div id="root">
+                <h1 style="text-align: center;">Drag & Drop config file to get started</h1>
+            </div>
+        </div>   
+        <script type="text/javascript" src="http://localhost:8080/bundle.js"></script>
+        <script type="text/javascript">
+            window.fileName = 'asdf.httpd'
+                window.XMLData = {
+                    data: {
+                        Test: {
+                            nominal: '80',
+                            min: '15',
+                            restock: '1800',
+                            cost: '100',
+                            category: 'weapons',
+                            lifetime: '7200',
+                        }
+                    },
+                    fileType: 'types'
+                }
+
+                const evt = new CustomEvent('receiveData');
+                window.dispatchEvent(evt)
+            </script>
+    </body>
+</html>

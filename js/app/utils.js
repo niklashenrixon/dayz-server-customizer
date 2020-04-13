@@ -1,0 +1,1 @@
+export const getColumnWidth = columns => `${100/columns}%`

@@ -24,7 +24,8 @@ if(!isset($_COOKIE['cookiemonster'])) {
 	    alert('Your browser is outdate, please update');
 	  }
 	</script>
-	<script type="text/javascript" src="dist/bundle.js"></script>
+	
+	<script type="text/javascript" src="http://localhost:8080/bundle.js"></script>
 
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-50877463-3"></script>
 	<script defer async>

@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    "start": "webpack-dev-server --mode production --open"
+    "start": "webpack-dev-server --mode development --open"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
@@ -25,8 +25,8 @@
     "webpack-dev-server": "^3.1.10"
   },
   "dependencies": {
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "react-visibility-sensor": "^5.0.2"
   }
 }
