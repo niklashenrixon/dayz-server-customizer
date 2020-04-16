@@ -1,6 +1,146 @@
 <?PHP
 session_start();
+include "lib/functions.php";
+
 header('Content-Type: application/json');
+
+$jsonRespons = array("definitions"=>array(), "data"=>array(), "fileType"=>"types");
+
+array_push($jsonRespons['definitions'],
+		array(
+			"name" => "name",
+			"label" => "Name",
+			"type" => "readonly",
+			"visible" => true,
+		),
+		array(
+			"name" => "min",
+			"label" => "Minimum",
+			"type" => "number",
+			"min" => 0,
+			"visible" => true,
+		),
+		array(
+			"name" => "max",
+			"label" => "Maximum",
+			"type" => "number",
+			"min" => 0,
+			"visible" => true,
+		),
+		array(
+			"name" => "quantMin",
+			"label" => "Quantity Minimum",
+			"type" => "number",
+			"min" => 0,
+			"max" => 100,
+			"visible" => true,
+		),
+		array(
+			"name" => "quantMax",
+			"label" => "Quantity Maximum",
+			"type" => "number",
+			"min" => 0,
+			"max" => 100,
+			"visible" => true,
+		),
+		array(
+			"name" => "priority",
+			"label" => "Priotity",
+			"symbol" => "%",
+			"type" => "number",
+			"min" => 0,
+			"max" => 100,
+			"visible" => true,
+		),
+		array(
+			"name" => "restock",
+			"label" => "Restock Timer",
+			"symbol" => "s",
+			"type" => "number",
+			"min" => 0,
+			"max" => 100000,
+			"visible" => true,
+		),
+		array(
+			"name" => "lifetime",
+			"label" => "Lifetime Timer",
+			"symbol" => "s",
+			"type" => "number",
+			"min" => 0,
+			"max" => 100000,
+			"visible" => true,
+		),
+
+		array(
+			"name" => "category",
+			"label" => "Category",
+			"symbol" => "",
+			"type" => "readonly",
+			"visible" => true,
+		),
+
+		array(
+			"name" => "flags",
+			"label" => "Flags",
+			"type" => "multiselect",
+			"options"=>array(
+				"count_in_cargo",
+				"count_in_hoarder",
+				"count_in_map",
+				"count_in_player",
+				"crafted",
+				"deloot"
+			),
+			"visible" => false,
+		),
+
+		array(
+			"name" => "tags",
+			"label" => "Tags",
+			"type" => "multiselect",
+			"options"=>array(
+				"floor",
+				"shelves",
+				"ground"
+			),
+			"visible" => false,
+		),
+
+		array(
+			"name" => "tiers",
+			"label" => "Tiers",
+			"type" => "multiselect",
+			"options"=>array(
+				"Tier1",
+				"Tier2",
+				"Tier3",
+				"Tier4"
+			),
+			"visible" => false,
+		),
+	
+		array(
+			"name" => "usage",
+			"label" => "Usage",
+			"type" => "multiselect",
+			"options"=>array(
+				"Military",
+				"Police",
+				"Medic",
+				"Firefighter",
+				"Industrial",
+				"Farm",
+				"Coast",
+				"Town",
+				"Village",
+				"Hunting",
+				"Office",
+				"School",
+				"Prison"
+			),
+			"visible" => false,
+		)
+);
 
 function throwError($msg) {
 	$message = '{"error":"'.$msg.'"}';
@@ -47,25 +187,98 @@ if($uploadOk) {
 	if (move_uploaded_file($_FILES["uploadedfile"]["tmp_name"], $target_file)) {
 		chmod($target_file, 0777);
 		$xmlSave = simplexml_load_file('uploads/'.$_COOKIE['cookiemonster'].'/'.$filename.'_'.$_SESSION["hash"].'.xml') or throwError("Internal error");
-		foreach($xmlSave->children() as $item) {
-			$obj = get_object_vars($item);
-			$category = (string)$item->category[name];
-			if ($category === "") {
-				$category = null;
+
+		$x = 0;
+
+		foreach($xmlSave->children() as $types) {
+
+			$jsonID = (int)$x;
+
+			// Non array types
+			$jsonName     = (string)ifNull($types[$x]['name']);
+			$jsonNominal  = (float)ifNull($types->nominal); 
+			$jsonLifetime = (float)ifNull($types->lifetime);
+			$jsonRestock  = (float)ifNull($types->restock);
+			$jsonMin      = (float)ifNull($types->min);
+			$jsonQuantMin = (float)ifNull($types->quantmin);
+			$jsonQuantMax = (float)ifNull($types->quantmax);
+			$jsonCost     = (float)ifNull($types->cost);
+			$jsonCategory = (string)ifNull($types->category['name']);
+
+			// Count in
+			$jsonCargo    = (int)ifNull($types->flags['count_in_cargo']);
+			$jsonHoarder  = (int)ifNull($types->flags['count_in_hoarder']);
+			$jsonMap      = (int)ifNull($types->flags['count_in_map']);
+			$jsonPlayer   = (int)ifNull($types->flags['count_in_player']);
+			$jsonCrafted  = (int)ifNull($types->flags['crafted']);
+			$jsonDeloot   = (int)ifNull($types->flags['deloot']);
+			
+			$jsonTags     = array();
+			$jsonUsage    = array();
+			$jsonTiers    = array();
+
+			// TAG
+			if(is_null($types->tag['name'])) {
+				$jsonTags[] = NULL;
+			} else {
+				$v = 0;
+				foreach($types->tag as $z) {
+					$jsonTags[] = (string)$z[$v]['name'];
+					$v = $v+1;
+				}
 			}
-			// DUDE WTF IS THIS PIECE OF SHIT
-			$itemName = $item[name];
-			$data->{$itemName}->nominal = $obj['nominal'];
-			$data->{$itemName}->min = $obj['min'];
-			$data->{$itemName}->restock = $obj['restock'];
-			$data->{$itemName}->cost = $obj['cost'];
-			$data->{$itemName}->category = $category;
-			$data->{$itemName}->lifetime = $obj['lifetime'];
+
+			// USAGE
+			if(is_null($types->usage['name'])) {
+				$jsonUsage[] = NULL;
+			} else {
+				$v = 0;
+				foreach($types->usage as $z) {
+					$jsonUsage[] = (string)$z[$v]['name'];
+					$v = $v+1;
+				}
+			}
+
+			// TIER
+			if(is_null($types->value['name'])) {
+				$jsonTiers[] = NULL;
+			} else {
+				$v = 0;
+				foreach($types->value as $z) {
+					$jsonTiers[] = (string)$z[$v]['name'];
+					$v = $v+1;
+				}
+			}
+
+			array_push($jsonRespons['data'], array("id" => $jsonID,
+					"name" => $jsonName,
+					"min" => $jsonMin,
+					"max" => $jsonNominal,
+					"quantMin" => $jsonQuantMin,
+					"quantMax" => $jsonQuantMax,
+					"lifetime" => $jsonLifetime,
+					"restock" => $jsonRestock,
+					"priority" => $jsonCost,
+					"flags" => array(
+						"count_in_cargo" => $jsonCargo,
+						"count_in_hoarder" => $jsonHoarder,
+						"count_in_map" => $jsonMap,
+						"count_in_player" => $jsonPlayer,
+						"crafted" => $jsonCrafted,
+						"deloot" => $jsonDeloot
+					),
+					"tags" => $jsonTags,
+					"usage" => $jsonUsage,
+					"tiers" =>$jsonTiers,
+					"category" => $jsonCategory
+			));
+
+			$x = $x+1;
 		}
-		$response->data = $data;
-		$response->fileType = $filename;
-		$janne = json_encode($response, JSON_PRETTY_PRINT);
+
+		$janne = json_encode($jsonRespons, JSON_PRETTY_PRINT);
 		print_r($janne);
+
 	} else {
 		echo json_encode("{ error: 'FUCK YOU'}");
  	}
