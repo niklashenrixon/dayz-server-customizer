@@ -10,8 +10,8 @@ const VisibilityToggler = ({ name, visible, onChange }) =>
     </span>
 
 export default () => {
-    const { definitions, handlers } = useContext(ConfigContext)
-    const visibleColumns = definitions.columns.filter(column => column.visible)
+    const { columns, handlers } = useContext(ConfigContext)
+    const visibleColumns = columns.filter(column => column.visible)
     const columnWidth = getColumnWidth(visibleColumns.length)
     return (
         <Row>

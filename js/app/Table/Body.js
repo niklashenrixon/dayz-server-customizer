@@ -1,26 +1,40 @@
 import React, { useContext } from 'react'
-import { ConfigContext } from '../context'
+import { ConfigContext, DataContext } from '../context'
 import Row from './Row'
 import Cell from './Cell'
 
-const Input = ({ value }) => <span>Input {value}</span>
-const MultiSelect = ({ value }) => <span>MultiSelect {value}</span>
-const ReadOnly = ({ value }) => <span>ReadOnly {value}</span>
+const Number = ({ value, name, propertyName }) => {
+    const { handlers } = useContext(ConfigContext)
+    return <input 
+        type='number'
+        value={value}
+        style={{ width: '100%' }} 
+        onChange={(e) => handlers.setValue(name, propertyName,  e.target.value)} 
+    />
+}
 
-const getControllType = (key, value, { columns }) => {
-    const { type } = columns.find( def => def.name === key )
+const MultiSelect = ({ values, options }) => 
+    <select style={{ width: '100%', height: '100%' }}>
+        { options.map(opt => <option key={opt} value={opt}>{opt}</option>) }
+    </select>
+
+const ReadOnly = ({ value }) => <span>{value}</span>
+
+const getControllType = (id, key, value, columns) => {
+    const { type, values: options } = columns.find( def => def.name === key )
     if(type === 'readonly') { return <ReadOnly value={value} /> }
-    if(type === 'multiselect') { return <MultiSelect value={value} /> }
-    if(type === 'number') { return <Input value={value} /> }
-    return <span>Undefined</span>
+    if(type === 'multiselect') {     
+        return <MultiSelect values={value} options={options} /> 
+    }
+    if(type === 'number') { return <Number name={id} propertyName={key} value={value} /> }
+    return <span>UNKNOWN TYPE</span>
 }
 
 export default () => {
-    const { definitions, data } = useContext(ConfigContext)
-    const visibleColumns = definitions.columns.filter(column => column.visible)
-    console.log('console', data)
-
-    
+    const { columns } = useContext(ConfigContext)
+    const { data } = useContext(DataContext)
+    console.log('BODY', data)
+    const visibleColumns = columns.filter(column => column.visible)
 
     return (
         <div>
@@ -28,8 +42,8 @@ export default () => {
                 data.map(dataPoint => <Row key={dataPoint.name}>
                     { 
                         visibleColumns.map(({ name, value }) => {
-                            const component = getControllType(name, dataPoint[name], definitions)
-                            return <Cell key={`${name}`}>{component}</Cell>
+                            const component = getControllType(dataPoint.id, name, dataPoint[name], columns)
+                            return <Cell stiff key={`${name}`}>{component}</Cell>
                         }) 
                     }                
                 </Row>)

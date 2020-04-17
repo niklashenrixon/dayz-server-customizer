@@ -1,16 +1,34 @@
 import React, { useContext, useEffect } from 'react'
 import MOCKDATA from './MOCKDATA'
 
-import { ConfigContext, LayoutContext } from './context'
+import { ConfigContext, LayoutContext, DataContext } from './context'
 import { getColumnWidth } from './utils'
 import { THead, TBody } from './Table'
 
 export default () => {
-    const [config, setConfig] = React.useState(MOCKDATA)
+    const { definitions: inputDefinitions, data: inputData } = MOCKDATA
+
+    console.log('Initializing')
+    console.log('definitions', inputDefinitions)
+    console.log('data', inputData)
+
+    const [config, setConfig] = React.useState(inputDefinitions)
+    const [data, setData] = React.useState([ ...inputData ])
     const [layout, setLayout] = React.useState({ columnWidth: '10%' })
- 
+
+    const setValue = (id, property, newValue) => {
+        const newData = data.map( d => {
+            if (d.id === id) {
+                d[property] = newValue
+            }
+            return d
+        })
+
+        setData(newData)
+    }
+
     const setColumnWidth = () => {
-        const newColumnWidth = 100 / config.definitions.columns.filter(c => c.visible).length
+        const newColumnWidth = 100 / inputDefinitions.columns.filter(c => c.visible).length
         setLayout({
             ...layout,
             columnWidth: `${newColumnWidth}%`
@@ -40,12 +58,17 @@ export default () => {
     return (
         <ConfigContext.Provider value={{
             ...config,
-            handlers: { setVisibleColumn }
+            handlers: { 
+                setVisibleColumn,
+                setValue
+             }
         }}>
-            <LayoutContext.Provider value={layout}>
-                <THead />
-                <TBody />
-            </LayoutContext.Provider>
+            <DataContext.Provider value={{ data }}>
+                <LayoutContext.Provider value={layout}>
+                    <THead />
+                    < TBody />
+                </LayoutContext.Provider>
+            </DataContext.Provider>
         </ConfigContext.Provider>
     )
 }

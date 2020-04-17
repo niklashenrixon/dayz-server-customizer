@@ -1,105 +1,145 @@
+import data from './data'
+
 export default {
     "definitions":{
        "columns":[
-          {
+         {
              "name": "name",
+             "label": "Name",
              "type": "readonly",
              "visible": true
-          },
-          {
+         },
+         {
              "name": "min",
+             "label": "Minimum",
              "type": "number",
              "min": 0,
              "visible": true
-          },
-          {
+         },
+         {
              "name": "max",
+             "label": "Maximum",
              "type": "number",
              "min": 0,
              "visible": true
-          },
-          {
+         },
+         {
              "name": "quantMin",
+             "label": "Quantity Minimum",
              "type": "number",
              "min": 0,
              "max": 100,
              "visible": true
-          },
-          {
+         },
+         {
              "name": "quantMax",
+             "label": "Quantity Maximum",
              "type": "number",
              "min": 0,
              "max": 100,
              "visible": true
-          },
-          {
+         },
+         {
              "name": "priority",
+             "label": "Priotity",
+             "symbol": "%",
              "type": "number",
+             "min": 0,
              "max": 100,
-             "min": 0,
-             "valueSymbol": "%",
              "visible": true
-          },
-          {
-             "name": "Restock timer",
+         },
+         {
+             "name": "restock",
+             "label": "Restock Timer",
+             "symbol": "s",
              "type": "number",
              "min": 0,
-             "valueSymbol": "s",
+             "max": 100000,
              "visible": true
-          },
-          {
-             "name": "Lifestock timer",
+         },
+         {
+             "name": "lifetime",
+             "label": "Lifetime Timer",
+             "symbol": "s",
              "type": "number",
              "min": 0,
-             "valueSymbol": "s",
+             "max": 100000,
              "visible": true
-          },
-          {
+         },
+         {
+             "name": "category",
+             "label": "Category",
+             "symbol": "",
+             "type": "readonly",
+             "visible": true
+         },
+         {
              "name": "flags",
+             "label": "Flags",
              "type": "multiselect",
              "options": [
-                "count_in_cargo",
-                "count_in_hoarder",
-                "count_in_map",
-                "count_in_player",
-                "crafted",
-                "deloot"
+                 "count_in_cargo",
+                 "count_in_hoarder",
+                 "count_in_map",
+                 "count_in_player",
+                 "crafted",
+                 "deloot"
              ],
              "visible": false
-          },
-          {
+         },
+         {
              "name": "tags",
+             "label": "Tags",
              "type": "multiselect",
-             "values": [
-                "floor",
-                "shelves",
-                "ground"
+             "options": [
+                 "floor",
+                 "shelves",
+                 "ground"
              ],
              "visible": false
-          },
-          {
-             "name": "Tiers",
+         },
+         {
+             "name": "tiers",
+             "label": "Tiers",
              "type": "multiselect",
-             "values": [
-                "Tier1",
-                "Tier2"
+             "options": [
+                 "Tier1",
+                 "Tier2",
+                 "Tier3",
+                 "Tier4"
              ],
              "visible": false
-          },
-          {
-             "name": "Usages",
+         },
+         {
+             "name": "usage",
+             "label": "Usage",
              "type": "multiselect",
-             "values": [
-                "Military",
-                "Police",
-                "Village"
+             "options": [
+                 "Military",
+                 "Police",
+                 "Medic",
+                 "Firefighter",
+                 "Industrial",
+                 "Farm",
+                 "Coast",
+                 "Town",
+                 "Village",
+                 "Hunting",
+                 "Office",
+                 "School",
+                 "Prison"
              ],
-             "visible": true
-          }
-       ]
+             "visible": false
+         }
+     ],
     },
-    "data":[
-      {
+    "data": data,
+    "fileType": "types"
+ }
+ 
+ /* 
+       {
+         "id": 12345,
          "name": "Kalashnikov",
          "min": 0,
          "max": 5,
@@ -122,6 +162,7 @@ export default {
          "category": "Tools"
       },
       {
+         "id": 6789,
          "name": "AKM",
          "min": 5,
          "max": 10,
@@ -143,7 +184,4 @@ export default {
          ],
          "category": "Tools"
       }
-    ],
-    "fileType": "types"
- }
- 
+ */
