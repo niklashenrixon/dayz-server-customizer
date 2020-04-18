@@ -10,13 +10,28 @@ const VisibilityToggler = ({ name, visible, onChange }) =>
     </span>
 
 export default () => {
-    const { columns, handlers } = useContext(ConfigContext)
+    const { columns, order, handlers } = useContext(ConfigContext)
     const visibleColumns = columns.filter(column => column.visible)
     const columnWidth = getColumnWidth(visibleColumns.length)
     return (
         <Row>
             { 
-                visibleColumns.map(c => <Cell value={c.name} key={c.name} />)
+                visibleColumns.map(c => {
+                    let orderIcon = ''
+
+                    if (order.trait === c.name) {
+                        if (order.ASC === true) { orderIcon = '▲'}
+                        else if (order.ASC === false) { orderIcon = '▼'}
+                    }
+
+                    return <Cell 
+                        value={`${orderIcon} ${c.name}`} 
+                        key={c.name}
+                        onClick={() => handlers.setColumnSort(c.name)} 
+                        style={{ cursor: 'pointer' }}
+                    />
+                }
+                )
             }
         </Row>
     )

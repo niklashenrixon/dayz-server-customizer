@@ -3,7 +3,7 @@ import { LayoutContext } from '../context'
 
 
 
-export default ({ value, children, stiff = false }) => {
+export default ({ value, children, style: styleOverride, onClick = () => {}, stiff = false }) => {
     const { columnWidth } = useContext(LayoutContext)
     const content = children ? children : value
 
@@ -13,11 +13,13 @@ export default ({ value, children, stiff = false }) => {
         padding: 3,
         overflow: stiff ? 'visible' : 'hidden',
         textOverflow: stiff ? 'inherit' : 'ellipsis',
-        whiteSpace: stiff ? 'inherit' : 'nowrap'
+        whiteSpace: stiff ? 'inherit' : 'nowrap',
+        ...styleOverride
+
     }
 
     return (
-        <div style={{...style,  width: columnWidth}} title={content}>
+        <div style={{...style,  width: columnWidth}} title={content} onClick={onClick}>
             { content }
         </div>
     )

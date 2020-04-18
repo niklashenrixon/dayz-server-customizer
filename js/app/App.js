@@ -12,7 +12,10 @@ export default () => {
     console.log('definitions', inputDefinitions)
     console.log('data', inputData)
 
-    const [config, setConfig] = React.useState(inputDefinitions)
+    const [config, setConfig] = React.useState({
+        ...inputDefinitions,
+        order: { trait: 'name', ASC: true}
+    })
     const [data, setData] = React.useState([ ...inputData ])
     const [layout, setLayout] = React.useState({ columnWidth: '10%' })
 
@@ -33,6 +36,27 @@ export default () => {
             ...layout,
             columnWidth: `${newColumnWidth}%`
         })       
+    }
+
+    const setColumnSort = (trait) => {
+        const { trait: currentTrait, ASC } = config.order
+        const newOrder = { trait: currentTrait, ASC: true }
+
+        if (currentTrait === trait) {
+            if (ASC === true) {
+                newOrder.ASC = false
+            } else if (ASC === false) {
+                newOrder.trait = null
+                newOrder.ASC = null
+            }
+        } else {
+            newOrder.trait = trait
+        }
+
+        setConfig({
+            ...config,
+            order: newOrder
+        })
     }
 
     const setVisibleColumn = name => {
@@ -60,7 +84,8 @@ export default () => {
             ...config,
             handlers: { 
                 setVisibleColumn,
-                setValue
+                setValue,
+                setColumnSort
              }
         }}>
             <DataContext.Provider value={{ data }}>
