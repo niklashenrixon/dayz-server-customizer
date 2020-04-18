@@ -88,28 +88,424 @@ export default {
              "visible": false
          },
          {
-             "name": "tags",
-             "label": "Tags",
-             "type": "multiselect",
-             "options": [
-                 "floor",
-                 "shelves",
-                 "ground"
-             ],
-             "visible": false
-         },
-         {
-             "name": "tiers",
-             "label": "Tiers",
-             "type": "multiselect",
-             "options": [
-                 "Tier1",
-                 "Tier2",
-                 "Tier3",
-                 "Tier4"
-             ],
-             "visible": false
-         },
+            "name": "tags",
+            "label": "Tags",
+            "type": "multiselect",
+            "options": [
+                "floor",
+                "shelves",
+                "ground"
+            ],
+            "visible": false
+        },
+        {
+            "name": "tiers",
+            "label": "Tiers",
+            "type": "multiselect",
+            "options": [
+                "Tier1",
+                "Tier2",
+                "Tier3",
+                "Tier4"
+            ],
+            "visible": false
+        },         {
+            "name": "tags",
+            "label": "Tags",
+            "type": "multiselect",
+            "options": [
+                "floor",
+                "shelves",
+                "ground"
+            ],
+            "visible": false
+        },
+        {
+            "name": "tiers",
+            "label": "Tiers",
+            "type": "multiselect",
+            "options": [
+                "Tier1",
+                "Tier2",
+                "Tier3",
+                "Tier4"
+            ],
+            "visible": false
+        },         {
+            "name": "tags",
+            "label": "Tags",
+            "type": "multiselect",
+            "options": [
+                "floor",
+                "shelves",
+                "ground"
+            ],
+            "visible": false
+        },
+        {
+            "name": "tiers",
+            "label": "Tiers",
+            "type": "multiselect",
+            "options": [
+                "Tier1",
+                "Tier2",
+                "Tier3",
+                "Tier4"
+            ],
+            "visible": false
+        },         {
+            "name": "tags",
+            "label": "Tags",
+            "type": "multiselect",
+            "options": [
+                "floor",
+                "shelves",
+                "ground"
+            ],
+            "visible": false
+        },
+        {
+            "name": "tiers",
+            "label": "Tiers",
+            "type": "multiselect",
+            "options": [
+                "Tier1",
+                "Tier2",
+                "Tier3",
+                "Tier4"
+            ],
+            "visible": false
+        },         {
+            "name": "tags",
+            "label": "Tags",
+            "type": "multiselect",
+            "options": [
+                "floor",
+                "shelves",
+                "ground"
+            ],
+            "visible": false
+        },
+        {
+            "name": "tiers",
+            "label": "Tiers",
+            "type": "multiselect",
+            "options": [
+                "Tier1",
+                "Tier2",
+                "Tier3",
+                "Tier4"
+            ],
+            "visible": false
+        },         {
+            "name": "tags",
+            "label": "Tags",
+            "type": "multiselect",
+            "options": [
+                "floor",
+                "shelves",
+                "ground"
+            ],
+            "visible": false
+        },
+        {
+            "name": "tiers",
+            "label": "Tiers",
+            "type": "multiselect",
+            "options": [
+                "Tier1",
+                "Tier2",
+                "Tier3",
+                "Tier4"
+            ],
+            "visible": false
+        },         {
+            "name": "tags",
+            "label": "Tags",
+            "type": "multiselect",
+            "options": [
+                "floor",
+                "shelves",
+                "ground"
+            ],
+            "visible": false
+        },
+        {
+            "name": "tiers",
+            "label": "Tiers",
+            "type": "multiselect",
+            "options": [
+                "Tier1",
+                "Tier2",
+                "Tier3",
+                "Tier4"
+            ],
+            "visible": false
+        },         {
+            "name": "tags",
+            "label": "Tags",
+            "type": "multiselect",
+            "options": [
+                "floor",
+                "shelves",
+                "ground"
+            ],
+            "visible": false
+        },
+        {
+            "name": "tiers",
+            "label": "Tiers",
+            "type": "multiselect",
+            "options": [
+                "Tier1",
+                "Tier2",
+                "Tier3",
+                "Tier4"
+            ],
+            "visible": false
+        },         {
+            "name": "tags",
+            "label": "Tags",
+            "type": "multiselect",
+            "options": [
+                "floor",
+                "shelves",
+                "ground"
+            ],
+            "visible": false
+        },
+        {
+            "name": "tiers",
+            "label": "Tiers",
+            "type": "multiselect",
+            "options": [
+                "Tier1",
+                "Tier2",
+                "Tier3",
+                "Tier4"
+            ],
+            "visible": false
+        },         {
+            "name": "tags",
+            "label": "Tags",
+            "type": "multiselect",
+            "options": [
+                "floor",
+                "shelves",
+                "ground"
+            ],
+            "visible": false
+        },
+        {
+            "name": "tiers",
+            "label": "Tiers",
+            "type": "multiselect",
+            "options": [
+                "Tier1",
+                "Tier2",
+                "Tier3",
+                "Tier4"
+            ],
+            "visible": false
+        },         {
+            "name": "tags",
+            "label": "Tags",
+            "type": "multiselect",
+            "options": [
+                "floor",
+                "shelves",
+                "ground"
+            ],
+            "visible": false
+        },
+        {
+            "name": "tiers",
+            "label": "Tiers",
+            "type": "multiselect",
+            "options": [
+                "Tier1",
+                "Tier2",
+                "Tier3",
+                "Tier4"
+            ],
+            "visible": false
+        },         {
+            "name": "tags",
+            "label": "Tags",
+            "type": "multiselect",
+            "options": [
+                "floor",
+                "shelves",
+                "ground"
+            ],
+            "visible": false
+        },
+        {
+            "name": "tiers",
+            "label": "Tiers",
+            "type": "multiselect",
+            "options": [
+                "Tier1",
+                "Tier2",
+                "Tier3",
+                "Tier4"
+            ],
+            "visible": false
+        },         {
+            "name": "tags",
+            "label": "Tags",
+            "type": "multiselect",
+            "options": [
+                "floor",
+                "shelves",
+                "ground"
+            ],
+            "visible": false
+        },
+        {
+            "name": "tiers",
+            "label": "Tiers",
+            "type": "multiselect",
+            "options": [
+                "Tier1",
+                "Tier2",
+                "Tier3",
+                "Tier4"
+            ],
+            "visible": false
+        },         {
+            "name": "tags",
+            "label": "Tags",
+            "type": "multiselect",
+            "options": [
+                "floor",
+                "shelves",
+                "ground"
+            ],
+            "visible": false
+        },
+        {
+            "name": "tiers",
+            "label": "Tiers",
+            "type": "multiselect",
+            "options": [
+                "Tier1",
+                "Tier2",
+                "Tier3",
+                "Tier4"
+            ],
+            "visible": false
+        },         {
+            "name": "tags",
+            "label": "Tags",
+            "type": "multiselect",
+            "options": [
+                "floor",
+                "shelves",
+                "ground"
+            ],
+            "visible": false
+        },
+        {
+            "name": "tiers",
+            "label": "Tiers",
+            "type": "multiselect",
+            "options": [
+                "Tier1",
+                "Tier2",
+                "Tier3",
+                "Tier4"
+            ],
+            "visible": false
+        },         {
+            "name": "tags",
+            "label": "Tags",
+            "type": "multiselect",
+            "options": [
+                "floor",
+                "shelves",
+                "ground"
+            ],
+            "visible": false
+        },
+        {
+            "name": "tiers",
+            "label": "Tiers",
+            "type": "multiselect",
+            "options": [
+                "Tier1",
+                "Tier2",
+                "Tier3",
+                "Tier4"
+            ],
+            "visible": false
+        },         {
+            "name": "tags",
+            "label": "Tags",
+            "type": "multiselect",
+            "options": [
+                "floor",
+                "shelves",
+                "ground"
+            ],
+            "visible": false
+        },
+        {
+            "name": "tiers",
+            "label": "Tiers",
+            "type": "multiselect",
+            "options": [
+                "Tier1",
+                "Tier2",
+                "Tier3",
+                "Tier4"
+            ],
+            "visible": false
+        },         {
+            "name": "tags",
+            "label": "Tags",
+            "type": "multiselect",
+            "options": [
+                "floor",
+                "shelves",
+                "ground"
+            ],
+            "visible": false
+        },
+        {
+            "name": "tiers",
+            "label": "Tiers",
+            "type": "multiselect",
+            "options": [
+                "Tier1",
+                "Tier2",
+                "Tier3",
+                "Tier4"
+            ],
+            "visible": false
+        },         {
+            "name": "tags",
+            "label": "Tags",
+            "type": "multiselect",
+            "options": [
+                "floor",
+                "shelves",
+                "ground"
+            ],
+            "visible": false
+        },
+        {
+            "name": "tiers",
+            "label": "Tiers",
+            "type": "multiselect",
+            "options": [
+                "Tier1",
+                "Tier2",
+                "Tier3",
+                "Tier4"
+            ],
+            "visible": false
+        },
          {
              "name": "usage",
              "label": "Usage",

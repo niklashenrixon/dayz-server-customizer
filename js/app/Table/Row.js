@@ -1,4 +1,5 @@
 import React from 'react'
+import VisibilitySensor from 'react-visibility-sensor'
 
 const style = {
     display: 'flex',
@@ -9,6 +10,14 @@ const style = {
 }
 
 export default ({ children }) => 
-    <div style={style}>
-        {children}
-    </div>
+    <VisibilitySensor partialVisibility>
+        {
+            ({ isVisible }) => 
+                isVisible ?    
+                     <div style={style}>
+                         {children}
+                    </div> 
+                :
+                    <div style={{ ...style, background: 'grey'}}> children</div>
+        }
+    </VisibilitySensor>
