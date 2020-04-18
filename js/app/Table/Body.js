@@ -30,16 +30,38 @@ const getControllType = (id, key, value, columns) => {
     return <span>UNKNOWN TYPE</span>
 }
 
+const sorter = (trait, ascending) => (a, b) => { 
+    if(a[trait] === null){
+      return 1;
+    }
+    else if(b[trait] === null){
+      return -1;
+    }
+    else if(a[trait] === b){
+      return 0;
+    }
+    else if(ascending) {
+      return parseInt(a[trait]) < parseInt(b[trait]) ? -1 : 1;
+    }
+    else if(!ascending) {
+      return parseInt(a[trait]) < parseInt(b[trait]) ? 1 : -1;
+    }
+}	
+
 export default () => {
-    const { columns } = useContext(ConfigContext)
+    const { columns, order } = useContext(ConfigContext)
     const { data } = useContext(DataContext)
-    console.log('BODY', data)
     const visibleColumns = columns.filter(column => column.visible)
+
+    let toRender = data
+    if (order.trait) {
+        toRender = [...data].sort((a, b) => sorter(order.trait, order.ASC)(a, b))
+    }
 
     return (
         <div>
             {
-                data.map(dataPoint => <Row key={dataPoint.name}>
+                toRender.map(dataPoint => <Row key={dataPoint.name}>
                     { 
                         visibleColumns.map(({ name, value }) => {
                             const component = getControllType(dataPoint.id, name, dataPoint[name], columns)

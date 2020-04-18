@@ -46,6 +46,7 @@ export default () => {
             if (ASC === true) {
                 newOrder.ASC = false
             } else if (ASC === false) {
+                const defaultTrait = 
                 newOrder.trait = null
                 newOrder.ASC = null
             }
