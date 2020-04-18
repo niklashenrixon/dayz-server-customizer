@@ -46,16 +46,27 @@ const sorter = (trait, ascending) => (a, b) => {
     else if(!ascending) {
       return parseInt(a[trait]) < parseInt(b[trait]) ? 1 : -1;
     }
-}	
+}
 
 export default () => {
-    const { columns, order } = useContext(ConfigContext)
+    const { columns, order, filter, ...restConfig} = useContext(ConfigContext)
     const { data } = useContext(DataContext)
     const visibleColumns = columns.filter(column => column.visible)
 
     let toRender = data
     if (order.trait) {
-        toRender = [...data].sort((a, b) => sorter(order.trait, order.ASC)(a, b))
+        toRender = [...toRender].sort((a, b) => sorter(order.trait, order.ASC)(a, b))
+    }
+
+    console.log('Body render', filter)
+    if (filter) {
+        toRender = toRender.filter(r => {
+            console.log('r', r)
+            if (r.name.search(filter) !== -1) {
+                return true
+            }
+            return false
+        })
     }
 
     return (
