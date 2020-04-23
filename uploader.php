@@ -2,145 +2,58 @@
 session_start();
 include "lib/functions.php";
 
+$servername = "localhost";
+$username = "nixon";
+$password = "H4cktheplanet!";
+$dbname = "dssc";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+	die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT * FROM definitions";
+$result = $conn->query($sql);
+
+$definitionsArray = array();
+
+if ($result->num_rows > 0) {
+	while($row = $result->fetch_assoc()) {
+
+		$sqlName    = (string) ifNull($row["name"]);
+		$sqlLabel   = (string) ifNull($row["label"]);
+		$sqlSymbol  = (string) ifNull($row["symbol"]);
+		$sqlType    = (string) ifNull($row["type"]);
+		$sqlMin     = (float)  ifNull($row["min"]);
+		$sqlMax     = (int)    ifNull($row["max"]);
+		$sqlOptions = explode(",",(string)ifNull($row["options"]));
+		$sqlVisible = (bool)   ifNull($row["visible"]);
+
+		$definitionsArray[] = array(
+			"name"    => $sqlName,
+			"label"   => $sqlLabel,
+			"symbol"  => $sqlSymbol,
+			"type"    => $sqlType,
+			"min"     => $sqlMin,
+			"max"     => $sqlMax,
+			"options" => $sqlOptions,
+			"visible" => $sqlVisible
+		);
+	}
+} else {
+	echo "0 results";
+}
+
+$conn->close();
+
+
 header('Content-Type: application/json');
 
-$jsonRespons = array("definitions"=>array(), "data"=>array(), "fileType"=>"types");
+$jsonRespons = array("definitions"=>$definitionsArray, "data"=>array(), "fileType"=>"types");
 
-array_push($jsonRespons['definitions'],
-		array(
-			"name" => "name",
-			"label" => "Name",
-			"type" => "readonly",
-			"visible" => true,
-		),
-		array(
-			"name" => "min",
-			"label" => "Minimum",
-			"type" => "number",
-			"min" => 0,
-			"visible" => true,
-		),
-		array(
-			"name" => "max",
-			"label" => "Maximum",
-			"type" => "number",
-			"min" => 0,
-			"visible" => true,
-		),
-		array(
-			"name" => "quantMin",
-			"label" => "Quantity Minimum",
-			"type" => "number",
-			"min" => 0,
-			"max" => 100,
-			"visible" => true,
-		),
-		array(
-			"name" => "quantMax",
-			"label" => "Quantity Maximum",
-			"type" => "number",
-			"min" => 0,
-			"max" => 100,
-			"visible" => true,
-		),
-		array(
-			"name" => "priority",
-			"label" => "Priotity",
-			"symbol" => "%",
-			"type" => "number",
-			"min" => 0,
-			"max" => 100,
-			"visible" => true,
-		),
-		array(
-			"name" => "restock",
-			"label" => "Restock Timer",
-			"symbol" => "s",
-			"type" => "number",
-			"min" => 0,
-			"max" => 100000,
-			"visible" => true,
-		),
-		array(
-			"name" => "lifetime",
-			"label" => "Lifetime Timer",
-			"symbol" => "s",
-			"type" => "number",
-			"min" => 0,
-			"max" => 100000,
-			"visible" => true,
-		),
-
-		array(
-			"name" => "category",
-			"label" => "Category",
-			"symbol" => "",
-			"type" => "readonly",
-			"visible" => true,
-		),
-
-		array(
-			"name" => "flags",
-			"label" => "Flags",
-			"type" => "multiselect",
-			"options"=>array(
-				"count_in_cargo",
-				"count_in_hoarder",
-				"count_in_map",
-				"count_in_player",
-				"crafted",
-				"deloot"
-			),
-			"visible" => false,
-		),
-
-		array(
-			"name" => "tags",
-			"label" => "Tags",
-			"type" => "multiselect",
-			"options"=>array(
-				"floor",
-				"shelves",
-				"ground"
-			),
-			"visible" => false,
-		),
-
-		array(
-			"name" => "tiers",
-			"label" => "Tiers",
-			"type" => "multiselect",
-			"options"=>array(
-				"Tier1",
-				"Tier2",
-				"Tier3",
-				"Tier4"
-			),
-			"visible" => false,
-		),
-	
-		array(
-			"name" => "usage",
-			"label" => "Usage",
-			"type" => "multiselect",
-			"options"=>array(
-				"Military",
-				"Police",
-				"Medic",
-				"Firefighter",
-				"Industrial",
-				"Farm",
-				"Coast",
-				"Town",
-				"Village",
-				"Hunting",
-				"Office",
-				"School",
-				"Prison"
-			),
-			"visible" => false,
-		)
-);
+//array_push($jsonRespons['definitions'], );
 
 function throwError($msg) {
 	$message = '{"error":"'.$msg.'"}';
@@ -196,13 +109,13 @@ if($uploadOk) {
 
 			// Non array types
 			$jsonName     = (string)ifNull($types[$x]['name']);
-			$jsonNominal  = (float)ifNull($types->nominal); 
-			$jsonLifetime = (float)ifNull($types->lifetime);
-			$jsonRestock  = (float)ifNull($types->restock);
-			$jsonMin      = (float)ifNull($types->min);
-			$jsonQuantMin = (float)ifNull($types->quantmin);
-			$jsonQuantMax = (float)ifNull($types->quantmax);
-			$jsonCost     = (float)ifNull($types->cost);
+			$jsonNominal  = (float) ifNull($types->nominal); 
+			$jsonLifetime = (float) ifNull($types->lifetime);
+			$jsonRestock  = (float) ifNull($types->restock);
+			$jsonMin      = (float) ifNull($types->min);
+			$jsonQuantMin = (float) ifNull($types->quantmin);
+			$jsonQuantMax = (float) ifNull($types->quantmax);
+			$jsonCost     = (float) ifNull($types->cost);
 			$jsonCategory = (string)ifNull($types->category['name']);
 
 			// Count in
@@ -250,7 +163,8 @@ if($uploadOk) {
 				}
 			}
 
-			array_push($jsonRespons['data'], array("id" => $jsonID,
+			array_push($jsonRespons['data'],
+				array("id" => $jsonID,
 					"name" => $jsonName,
 					"min" => $jsonMin,
 					"max" => $jsonNominal,
@@ -269,7 +183,7 @@ if($uploadOk) {
 					),
 					"tags" => $jsonTags,
 					"usage" => $jsonUsage,
-					"tiers" =>$jsonTiers,
+					"tiers" => $jsonTiers,
 					"category" => $jsonCategory
 			));
 
