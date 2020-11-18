@@ -1,4 +1,18 @@
-# Dayz Standalone Server Customizer
+<div align="center">
+<br>
+<h1>Dayz Standalone Server Customizer</h1>
+</div>
+
+
+<div align="center">
+<br>
+<img src="https://forthebadge.com/images/badges/approved-by-george-costanza.svg" />
+<img src="https://forthebadge.com/images/badges/powered-by-black-magic.svg" />
+<img src="https://forthebadge.com/images/badges/built-by-neckbeards.svg" />
+</div>
+
+<br>
+
 
 **A tool that makes changing loot on your Dayz Server 1056 times easier!**
 
